@@ -1,0 +1,53 @@
+.auth-form {
+    margin: 0 auto;
+    padding: 0.5rem 0 0 0;
+    background-color: white;
+    position: fixed;
+    height: fit-content;
+    left: 5%;
+    width: 90%;
+    top: 17%;
+    z-index: 4;
+    animation-name: examples;
+    animation-duration: 1s;
+    text-align: left;
+    font-size: larger;
+    box-sizing: border-box;
+    border-radius: 10px;  
+
+}
+
+.short{
+    width:48%;
+    padding: 0.2rem 0.5rem;
+    box-sizing: border-box;
+    border: 1px #cfcacc solid;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.long{
+    width: 100%;
+    padding: 0.2rem 0.5rem;
+    box-sizing: border-box;
+    border: 1px #cfcacc solid;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+@keyframes examples {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translate(0%);
+    }
+}
+
+@media screen and (min-width:1000px) {
+    .auth-form{
+        width: 50%;
+        left:calc(100% - 75%)
+    }
+}

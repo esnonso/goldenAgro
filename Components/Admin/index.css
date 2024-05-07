@@ -1,0 +1,104 @@
+/* MAIN STYLES FOR ADMIN LANDING PAGE */
+.nav-admin{
+    font-size: large;
+    width: 100%;
+    margin:0;
+    padding: 0;
+    border: 1px crimson solid;
+}
+
+.nav-admin li{
+    padding: 0.7rem 0.3rem;
+    list-style-type: none;
+    border-bottom: 1px white solid;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.2rem;
+    background-color: inherit;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+}
+
+.nav-admin a {
+    color: white;
+    text-decoration: none;
+    background-color: crimson;
+}
+
+.nav-admin a:hover {
+    color:black
+}
+
+.nav-admin a.active {
+   background-color: white;
+   color: crimson;
+}
+
+/* STYLES FOR PRODUCTS */
+.product-form{
+    margin: 0;
+    padding: 2rem 1rem 0 0;
+    background-color: white;
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    top: 1rem;
+    z-index: 4;
+    animation-name: examples;
+    animation-duration: 1s;
+    text-align: left;
+    font-size: larger;
+    box-sizing: border-box;
+    height: 95vh;
+    overflow:scroll;
+}
+
+.form-control-post {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control-post input
+{
+    height: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-size: large;
+}
+
+.form-control-post select{
+    height: 1.8rem;
+}
+
+textarea{
+    height: 5rem;
+    margin-bottom: 0.5rem;
+    font-size: larger;
+}
+
+.top-nav {
+    border-top: 1px white solid;
+}
+
+@media screen and (min-width:800px) {
+    .post-form-container{
+        width: 80%;
+        left:10%;
+    }
+
+    .form-control-post{
+        width: 80%;
+    }
+}
+
+@keyframes examples {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translate(0%);
+    }
+}

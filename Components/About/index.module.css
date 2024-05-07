@@ -1,0 +1,36 @@
+.about-header {
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    background-color: #0b6623;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 60% 100%;
+    background-blend-mode: multiply;
+    background-image: url("../../Images/about.jpg");
+    align-items:center;
+    justify-content: center;
+    box-sizing: border-box;
+    color:white
+}
+
+.banner{
+    margin-top:6rem;
+    background-color: #0b6623;
+    width: 100%;
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 100% 30%;
+    background-blend-mode: multiply;
+    background-image: url("../../Images/nobg.png");
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 900px) {
+    .banner{
+        background-size: 30%;
+    }
+}

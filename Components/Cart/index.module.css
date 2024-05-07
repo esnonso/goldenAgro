@@ -1,0 +1,10 @@
+.input{
+    width:2rem;
+    margin:0 0.2rem;
+    font-family: inherit;
+}
+
+.select{
+    width:6rem;
+    font-family: inherit;
+}

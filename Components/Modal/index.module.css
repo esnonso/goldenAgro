@@ -1,0 +1,55 @@
+.modal {
+    height: fit-content;
+    padding: 1rem;
+    left: 2.5%;
+    width: 95%;
+    background-color: white;
+    position: fixed;
+    top: 2.5%;
+    z-index: 4;
+    animation-name: examples;
+    animation-duration: 1s;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn{
+   display: flex;
+   height: 1rem;
+   width:1rem;
+   justify-content: center;
+   align-items: center;
+   background-color: #F54235;
+   border: none;
+   border-radius: 5px;
+}
+
+@keyframes examples {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (min-width:700px) and (max-width:900px) {
+   .modal{
+    left:15%;
+    width: 70%;
+   } 
+}
+
+@media screen and (min-width:900px) {
+    .modal {
+        left: 25%;
+        width: 50%;
+    }
+}

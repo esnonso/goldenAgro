@@ -1,0 +1,15 @@
+.contact-header {
+    height: 10rem;
+    width: 100%;
+    display: flex;
+    background-color: #0b6623;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    background-size: 100%;
+    background-position: 60% 40%;
+    background-image: url("../../Images/contact.jpeg");
+    align-items:center;
+    justify-content: center;
+    box-sizing: border-box;
+    color:white
+}

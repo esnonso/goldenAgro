@@ -1,0 +1,30 @@
+.cards {
+    width: 90%;
+    margin: 1rem auto 0rem auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+
+@media only screen and (min-width : 700px) and (max-width: 914px) {
+    .cards {
+        width: 40%;
+    }
+}
+
+@media only screen and (min-width : 915px) and (max-width: 1200px) {
+    .cards {
+        width: 30%;
+        margin-top: 1rem;
+    }
+}
+
+@media only screen and (min-width : 1201px) {
+    .cards {
+        width: 25%;
+    }
+}

@@ -1,0 +1,11 @@
+.container-profile{
+    width: 100%;
+    margin-top: 3.5rem;
+}
+
+
+@media screen and (min-width:850px) {
+    .container-profile{
+        margin-top: 6rem;
+    }
+}
