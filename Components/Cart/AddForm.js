@@ -1,41 +1,65 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import classes from "./index.module.css";
 import Container from "../Containers/container";
 import { PTags } from "../Text";
 import Button from "../Button";
+import Alert from "../Alert";
 import { CartContext } from "../Context/cart";
 
 const AddForm = (props) => {
   const cartCtx = useContext(CartContext);
   const [quantity, setQuantity] = useState(0);
+  const [selected, setSelected] = useState("");
   const [size, setSize] = useState("");
+  const [alert, showAlert] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const inputChangeHandler = (setState) => (e) => {
     setState(e.target.value);
   };
 
   const increaseQuantityHandler = () => {
-    setQuantity((prevState) => prevState + 1);
+    setQuantity((prevState) => +prevState + 1);
   };
 
   const decreaseQuantityHandler = () => {
     if (quantity > 0) {
-      setQuantity((prevState) => prevState - 1);
+      setQuantity((prevState) => +prevState - 1);
     }
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    let selectedItem;
+    if (size === "") return;
+    if (quantity === 0) setQuantity(1);
     for (let item of products) {
-      if (item.size === size) selectedItem = item;
+      if (item.size === size) {
+        cartCtx.addToCart({
+          id: item.id,
+          size: item.size,
+          quantity: +quantity,
+          price: item.price,
+        });
+        setSelected(item.size);
+      }
     }
-    selectedItem.quantity = quantity;
-    cartCtx.addToCart(selectedItem);
+    setDisabled(true);
+    showAlert(true);
+    setTimeout(() => {
+      props.onHide();
+    }, 2000);
   };
-  console.log(cartCtx);
+
   return (
     <form width="100%" onSubmit={submitHandler}>
+      {alert && (
+        <Alert
+          message={`${quantity} ${
+            quantity === 1 ? "bag" : "bags"
+          } of ${selected} rice added to cart`}
+          status={"success"}
+        />
+      )}
       <PTags fontSize="20px" width="100%" textAlign="center">
         Add to Cart
       </PTags>
@@ -81,15 +105,17 @@ const AddForm = (props) => {
         </Container>
       </Container>
 
-      <Container width="100%" justify="center">
-        <Button
-          text="+ ADD"
-          back={"#0b6223"}
-          height={"2rem"}
-          width="100%"
-          color="white"
-          type={"submit"}
-        />
+      <Container width="100%" justify="flex-end">
+        {!disabled && (
+          <Button
+            text="+ ADD"
+            back={"#0b6223"}
+            height={"3rem"}
+            width="30%"
+            color="white"
+            type={"submit"}
+          />
+        )}
       </Container>
     </form>
   );

@@ -1,0 +1,39 @@
+.error-alert, .success-alert {
+    height: fit-content;
+    position: fixed;
+    left: 2.5%;
+    width: 95%;
+    top:0;
+    background-color: white;
+    z-index: 6;
+    animation-name: examples;
+    animation-duration: 1s;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.error-alert{
+    border: 2px #D9534F solid;
+    color: #D9534F;
+}
+
+.success-alert{
+    border: 2px #5CB85C solid;
+    color:#5CB85C;
+}
+
+.text-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@keyframes examples {
+    from {
+        top: -50%;
+    }
+
+    to {
+        top: 0;
+    }
+}

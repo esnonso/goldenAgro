@@ -1,13 +1,17 @@
-import { useState, useContext } from "react";
-import { Form } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Container from "../Containers/container";
 import { PTags } from "../Text/index";
 import Button from "../Button";
-import "./index.css";
+import classes from "./index.module.css";
 import axios from "axios";
-import { AuthContext } from "../Context/auth";
+import Link from "next/link";
 
 const AuthForm = (props) => {
+  const router = useRouter();
+  const { status } = useSession();
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,63 +20,77 @@ const AuthForm = (props) => {
   const [agree, setAgree] = useState(false);
   const [message, setMessage] = useState("");
   const [err, setErr] = useState("");
-  const authCtx = useContext(AuthContext);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (status === "authenticated") router.replace("/");
+  });
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setErr("");
+    setIsSubmitting(true);
     const event = props.register
       ? { email, password, lastname, firstname }
       : { email, password };
 
     const url = props.register
-      ? "http://localhost:8080/api/user/register"
+      ? "/api/register"
       : "http://localhost:8080/api/user/login";
 
     try {
       var validRegex =
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
+      if (!email.match(validRegex)) throw new Error("Invalid email address");
       if (props.register) {
         if (firstname.length < 2)
           throw new Error("First name should be up to 3 characters");
+        if (password.length < 7)
+          throw new Error("Passwordshould be up to 7 characters");
         if (lastname.length < 2)
           throw new Error("Last name should be up to 3 characters");
         if (!agree) throw new Error("Agree to terms and conditions");
         if (password !== cpassword) throw new Error("Passwords do not match");
-      }
-      if (!email.match(validRegex)) throw new Error("Invalid email address");
-      if (password.length < 7)
-        throw new Error("Passwordshould be up to 7 characters");
 
-      const response = await axios.post(url, event, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        await axios.post(url, event, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (!props.register) {
-        authCtx.login(response.data);
-        window.location.reload();
-      } else {
         setMessage(
           "Sucess! A verification email has been sent to your email address"
         );
-      }
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setCPassword("");
-      setCPassword("");
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setCPassword("");
+        setCPassword("");
 
-      setTimeout(() => {
-        props.onHide();
-      }, 10000);
-    } catch (err) {
-      if (err.response) {
-        setErr(err.response.data.error);
+        setTimeout(() => {
+          router.replace("/login");
+        }, 2000);
       } else {
-        setErr(err.message);
+        if (email === "" || password === "") {
+          setErr("Fill all inputs");
+          return;
+        }
+
+        //SIGNIN
+        const res = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+        if (res.error) throw new Error(res.error);
+        router.replace("/");
+      }
+    } catch (err) {
+      setIsSubmitting(false);
+      if (err.response) {
+        setErr(err.response.data || "An error occured");
+      } else {
+        setErr(err.message || "An error occured");
       }
     }
   };
@@ -86,27 +104,15 @@ const AuthForm = (props) => {
   };
 
   return (
-    <Form className="auth-form" onSubmit={submitHandler}>
-      <Container width="100%" justify="flex-end">
-        <Button
-          text="X"
-          width="2rem"
-          back={"white"}
-          height={"2rem"}
-          color="black"
-          font="inherit"
-          type="button"
-          click={props.onHide}
-        />
-      </Container>
+    <form className={classes["auth-form"]} onSubmit={submitHandler}>
       {props.register && (
         <PTags textAlign="center" fontSize="25px" margin="0 0 1rem 0">
-          Register
+          Sign Up
         </PTags>
       )}
       {!props.register && (
         <PTags textAlign="center" fontSize="25px" margin="0 0 1rem 0">
-          Login
+          Sign In
         </PTags>
       )}
       {err && (
@@ -120,7 +126,7 @@ const AuthForm = (props) => {
           fontSize="14px"
           radius="5px"
         >
-          Error: {err}
+          {err}
         </PTags>
       )}
       {message && (
@@ -143,7 +149,7 @@ const AuthForm = (props) => {
             type="text"
             placeholder="First name"
             name="firstname"
-            className="short"
+            className={classes["short"]}
             value={firstname}
             onChange={inputChangeHandler(setFirstName)}
           />
@@ -151,7 +157,7 @@ const AuthForm = (props) => {
             type="text"
             placeholder="Last name"
             name="lastname"
-            className="short"
+            className={classes["short"]}
             onChange={inputChangeHandler(setLastName)}
             value={lastname}
           />
@@ -162,7 +168,7 @@ const AuthForm = (props) => {
           type="text"
           placeholder="Email"
           name="email"
-          className="long"
+          className={classes["long"]}
           onChange={inputChangeHandler(setEmail)}
           value={email}
         />
@@ -172,7 +178,7 @@ const AuthForm = (props) => {
           type="password"
           placeholder="Password"
           name="password"
-          className="long"
+          className={classes["long"]}
           value={password}
           onChange={inputChangeHandler(setPassword)}
         />
@@ -184,10 +190,15 @@ const AuthForm = (props) => {
               type="password"
               placeholder="Confirm Password"
               name="password"
-              className="long"
+              className={classes["long"]}
               value={cpassword}
               onChange={inputChangeHandler(setCPassword)}
             />
+          </Container>
+          <Container width="100%" padding="0 1rem 0.5rem 1rem">
+            <Link href="/login" style={{ fontSize: "12px" }}>
+              Click to sign in
+            </Link>
           </Container>
           <Container width="100%" padding="1rem 1rem 1rem 1rem">
             <input
@@ -202,18 +213,23 @@ const AuthForm = (props) => {
         </>
       )}
 
+      {!props.register && (
+        <Container width="100%" padding="0 1rem 0.5rem 1rem">
+          <Link
+            href="/register"
+            style={{ textDecoration: "none", fontSize: "12px" }}
+          >
+            Click to register
+          </Link>{" "}
+        </Container>
+      )}
+
       <Container width="100%" padding="0 1rem 2rem 1rem">
-        <Button
-          text="submit"
-          width="fit-content"
-          back={"crimson"}
-          height={"2rem"}
-          padding={"0 2rem"}
-          color="white"
-          borderRadius={"5px"}
-        />
+        <button className={classes["button"]} disabled={isSubmitting}>
+          {props.register ? "Sign Up" : "Sign In"}
+        </button>
       </Container>
-    </Form>
+    </form>
   );
 };
 

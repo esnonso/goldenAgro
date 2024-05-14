@@ -10,7 +10,16 @@ import Image from "next/image";
 
 export default function Cart() {
   const cartCtx = useContext(CartContext);
-  //   console.log(cart.cart);
+
+  const totalPrice = cartCtx.cart.reduce(
+    (acc, item) => acc + +item.quantity * +item.price,
+    0
+  );
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return (
     <Container width="100%" flex="column">
       <PTags margin="1rem 0 1rem 0" fontSize="20px">
@@ -18,7 +27,7 @@ export default function Cart() {
       </PTags>
 
       {cartCtx.cart.length === 0 && (
-        <PTags fontSize="17px">Oops No Clothes in Laundry Basket!</PTags>
+        <PTags fontSize="17px">Oops No item in cart!</PTags>
       )}
       {cartCtx.cart.length > 0 && (
         <>
@@ -51,7 +60,7 @@ export default function Cart() {
               padding="0.5rem 0"
             >
               <PTags width="40%">{item.size}</PTags>
-              <PTags width="25%">₦{item.price}</PTags>
+              <PTags width="25%">₦{numberWithCommas(item.price)}</PTags>
               <Container
                 width="25%"
                 height="fit-content"
@@ -66,14 +75,14 @@ export default function Cart() {
                     width={20}
                     height={20}
                     className={classes.plus}
-                    // onClick={() => increaseCartItemQuantityHandler(item.id)}
+                    onClick={() => cartCtx.increaseCartItem(item.id)}
                   />
                   <Image
                     src={Minus}
                     alt="home icon by icons 8"
                     width={20}
                     height={20}
-                    // onClick={() => decreaseCartItemQuantityHandler(item.id)}
+                    onClick={() => cartCtx.decreaseCartItem(item.id)}
                   />
                 </Container>
               </Container>
@@ -83,19 +92,13 @@ export default function Cart() {
                   alt="close-icon"
                   width={20}
                   height={20}
-                  //   onClick={() =>
-                  //     removeFromCartHandler({
-                  //       id: item.id,
-                  //       price: item.price,
-                  //       quantity: item.quantity,
-                  //     })
-                  //   }
+                  onClick={() => cartCtx.removeFromCart(item.id)}
                 />
               </Container>
             </Container>
           ))}
           <PTags fontSize="20px" width="100%" textAlign="right" margin="1rem 0">
-            Total ₦{cartCtx.total}
+            Total ₦{numberWithCommas(totalPrice)}
           </PTags>
           <Container width="100%" justify="flex-end">
             <button

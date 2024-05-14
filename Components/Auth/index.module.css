@@ -1,12 +1,8 @@
 .auth-form {
-    margin: 0 auto;
+    margin: 6rem auto 0 auto;
     padding: 0.5rem 0 0 0;
     background-color: white;
-    position: fixed;
     height: fit-content;
-    left: 5%;
-    width: 90%;
-    top: 17%;
     z-index: 4;
     animation-name: examples;
     animation-duration: 1s;
@@ -35,13 +31,30 @@
     font-family: inherit;
 }
 
+.button{
+    background-color: #0b6623;
+    height:2.5rem;
+    width:fit-content;
+    color:white;
+    border:none;
+    font:inherit;
+    font-size: medium;
+    padding: 0 2rem;
+    border-radius: 5px;
+}
+
+.button:disabled{
+    background-color: gray;
+    color: black;
+}
+
 @keyframes examples {
     from {
-        transform: translateY(100%);
+        opacity: 0;;
     }
 
     to {
-        transform: translate(0%);
+        opacity: 100;;
     }
 }
 

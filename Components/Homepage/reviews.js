@@ -148,39 +148,39 @@ export default Reviews;
 const reviews = [
   {
     _id: 1,
-    name: "Starboy Nwoke",
+    name: "John Doe",
     rating: 5,
-    comment: "Freshfold is the best for all",
+    comment: "Golden agro rice is the best for all",
   },
   {
     _id: 2,
-    name: "Lethita One",
+    name: "Nonso Nelly",
     rating: 4,
-    comment: "Good drycleaning service",
+    comment: "Perfect rice for all",
   },
   {
     _id: 3,
     name: "Big Fish",
     rating: 4.5,
-    comment: "Recommended dry cleaning service for all",
+    comment: "Recommended rice for all",
   },
   {
     _id: 4,
     name: "Ben Carson",
     rating: 5,
-    comment: "Ethical dry cleaning service for all",
+    comment: "Ethical rice service for all",
   },
   {
     _id: 5,
     name: "Nonny Sharman",
     rating: 5,
-    comment: "Good drycleaners. Expert service",
+    comment: "I love golden agro rice",
   },
   {
     _id: 6,
     name: "Ben Bonus",
     rating: 3,
-    comment: "Took time to deliver",
+    comment: "Took time to deliver my product",
   },
   {
     _id: 7,
@@ -198,6 +198,6 @@ const reviews = [
     _id: 9,
     name: "Rebing John",
     rating: 5,
-    comment: "Freshfold is the best for all and recommended for all",
+    comment: "Golden agro is the best for all and recommended for all",
   },
 ];

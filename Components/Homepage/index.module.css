@@ -51,7 +51,7 @@
 }
 
 .advert-two-img {
-    background-image: url("../../Images/breakfast.jpg");
+    background-image: url("../../Images/my-rice.jpg");
 }
 
 .small-bag, .medium-bag, .average-bag, .big-bag{
@@ -63,7 +63,7 @@
     background-blend-mode: multiply;
     align-items: flex-end;
     box-sizing: border-box;
-    margin: 1rem auto;
+    margin: 3rem auto;
 }
 
 .small-bag{
