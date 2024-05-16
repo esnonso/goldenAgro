@@ -18,13 +18,13 @@ export const options = {
             email: credentials.email.toLowerCase(),
           });
           if (!user) {
-            throw new Error("Invalid Email address");
+            throw new Error("Invalid Email or password");
           }
           const comparePwd = await bcrypt.compare(
             credentials.password,
             user.password
           );
-          if (!comparePwd) throw new Error("Invalid password");
+          if (!comparePwd) throw new Error("Invalid email or password");
           return user;
         } catch (err) {
           throw new Error(err.message || "An error occured");

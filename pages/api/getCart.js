@@ -9,6 +9,7 @@ export default async function AddToCartHandler(req, res) {
     if (!session) throw new Error("User not found");
     await connectDatabase();
     const user = await User.findOne({ email: session.user.email });
+    if (!user) throw new Error("User not found");
     return res.status(200).json(user.cart);
   } catch (error) {
     return res.status(500).json(error);

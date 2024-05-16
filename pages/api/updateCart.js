@@ -5,11 +5,12 @@ import { options } from "./auth/[...nextauth]";
 
 export default async function AddToCartHandler(req, res) {
   try {
+    await connectDatabase();
     const { cart } = req.body;
     const session = await getServerSession(req, res, options);
-    if (!session) return;
-    await connectDatabase();
+    if (!session) throw new Error("User not found");
     const user = await User.findOne({ email: session.user.email });
+    if (!user) throw new Error("User not found");
     user.cart = cart;
     await user.save();
     return res.status(200).json("Success");
