@@ -1,13 +1,8 @@
-import {
-  createContext,
-  useReducer,
-  useEffect,
-  useState,
-  useCallback,
-} from "react";
+import { createContext, useReducer, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Alert from "../Alert";
+import Loader from "../Loaders/loader";
 
 const defaultState = {
   cart: [],
@@ -15,6 +10,7 @@ const defaultState = {
   removeFromCart: () => {},
   increaseCartItem: () => {},
   decreaseCartItem: () => {},
+  emptyCart: () => {},
 };
 
 export const CartContext = createContext(defaultState);
@@ -86,6 +82,11 @@ const cartReducer = (state, action) => {
       });
       return { cart: updatedCart };
     }
+
+    case "EMPTYCART": {
+      let updatedCart = [];
+      return { cart: updatedCart };
+    }
     default:
       return null;
   }
@@ -95,24 +96,29 @@ const CartContextProvider = (props) => {
   const [ShoppingCart, dispatch] = useReducer(cartReducer, { cart: [] });
   const { status } = useSession();
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const getItemsInCartHandler = async () => {
     try {
       if (status === "authenticated") {
         const cart = await axios.get("/api/getCart");
-        dispatch({
-          type: "LOADCART",
-          cart: cart.data,
-        });
+        if (cart.data.length > 0) {
+          dispatch({
+            type: "LOADCART",
+            cart: cart.data,
+          });
+        }
       }
       if (typeof window !== "undefined" && status === "unauthenticated") {
         const cart = (await JSON.parse(localStorage.getItem("cart"))) || [];
-        dispatch({
-          type: "LOADCART",
-          cart: cart,
-        });
+        if (cart.length > 0) {
+          dispatch({
+            type: "LOADCART",
+            cart: cart,
+          });
+        }
       }
-      return;
     } catch (error) {
       setError("Error loading cart");
       setTimeout(() => {
@@ -121,8 +127,9 @@ const CartContextProvider = (props) => {
     }
   };
 
-  const upadeteItemsInCartHandler = async () => {
+  const updateItemsInCartHandler = async () => {
     try {
+      setLoading(true);
       if (status === "authenticated") {
         await axios.post(
           "/api/updateCart",
@@ -133,6 +140,11 @@ const CartContextProvider = (props) => {
             },
           }
         );
+        if (
+          typeof window !== "undefined" &&
+          localStorage.getItem("cart") !== null
+        )
+          localStorage.removeItem("cart");
       }
       if (typeof window !== "undefined" && status === "unauthenticated") {
         if (localStorage.getItem("cart") === null) {
@@ -142,6 +154,11 @@ const CartContextProvider = (props) => {
           localStorage.setItem("cart", JSON.stringify(ShoppingCart.cart));
         }
       }
+      setLoading(false);
+      setSuccessMessage("Cart Updated");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 2000);
     } catch {
       setError("Error updating cart");
       setTimeout(() => {
@@ -151,11 +168,11 @@ const CartContextProvider = (props) => {
   };
 
   useEffect(() => {
-    getItemsInCartHandler();
+    if (status !== "loading") getItemsInCartHandler();
   }, [status]);
 
   useEffect(() => {
-    upadeteItemsInCartHandler();
+    if (status !== "loading") updateItemsInCartHandler();
   }, [ShoppingCart.cart]);
 
   const addToCartHandler = (item) => {
@@ -174,17 +191,24 @@ const CartContextProvider = (props) => {
     dispatch({ type: "REMOVE", id: id });
   };
 
+  const emptyCartHandler = () => {
+    dispatch({ type: "EMPTYCART" });
+  };
+
   const cartCtx = {
     cart: ShoppingCart.cart,
     addToCart: addToCartHandler,
     increaseCartItem: increaseCartItemHandler,
     decreaseCartItem: decreaseCartItemHandler,
     removeFromCart: removeFromCartHandler,
+    emptyCart: emptyCartHandler,
   };
 
   return (
     <CartContext.Provider value={cartCtx}>
       {error && <Alert message={error} status={"error"} />}
+      {successMessage && <Alert message={successMessage} status={"success"} />}
+      {loading && <Loader message={"Updating Cart"} />}
       {props.children}
     </CartContext.Provider>
   );

@@ -1,0 +1,8 @@
+.input {
+    font: inherit;
+    font-size: 14px;
+    padding: 0.2rem;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+    color: inherit;
+}

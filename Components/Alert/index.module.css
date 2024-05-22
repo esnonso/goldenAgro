@@ -4,7 +4,6 @@
     left: 2.5%;
     width: 95%;
     top:0;
-    background-color: white;
     z-index: 6;
     animation-name: examples;
     animation-duration: 1s;
@@ -13,13 +12,13 @@
 }
 
 .error-alert{
-    border: 2px #D9534F solid;
-    color: #D9534F;
+    background-color: #F8D7DA;
+    color:#721C24;
 }
 
 .success-alert{
-    border: 2px #5CB85C solid;
-    color:#5CB85C;
+   background-color: #D4EDDA;
+   color: #155724;
 }
 
 .text-container {

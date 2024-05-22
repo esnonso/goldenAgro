@@ -3,16 +3,12 @@ import classes from "./index.module.css";
 import Container from "../Containers/container";
 import { PTags } from "../Text";
 import Button from "../Button";
-import Alert from "../Alert";
 import { CartContext } from "../Context/cart";
 
 const AddForm = (props) => {
   const cartCtx = useContext(CartContext);
-  const [quantity, setQuantity] = useState(0);
-  const [selected, setSelected] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [size, setSize] = useState("");
-  const [alert, showAlert] = useState(false);
-  const [disabled, setDisabled] = useState(false);
 
   const inputChangeHandler = (setState) => (e) => {
     setState(e.target.value);
@@ -31,35 +27,21 @@ const AddForm = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (size === "") return;
-    if (quantity === 0) setQuantity(1);
     for (let item of products) {
       if (item.size === size) {
         cartCtx.addToCart({
           id: item.id,
           size: item.size,
-          quantity: +quantity,
+          quantity: +quantity || 1,
           price: item.price,
         });
-        setSelected(item.size);
       }
     }
-    setDisabled(true);
-    showAlert(true);
-    setTimeout(() => {
-      props.onHide();
-    }, 2000);
+    props.onHide();
   };
 
   return (
     <form width="100%" onSubmit={submitHandler}>
-      {alert && (
-        <Alert
-          message={`${quantity} ${
-            quantity === 1 ? "bag" : "bags"
-          } of ${selected} rice added to cart`}
-          status={"success"}
-        />
-      )}
       <PTags fontSize="20px" width="100%" textAlign="center">
         Add to Cart
       </PTags>
@@ -106,16 +88,14 @@ const AddForm = (props) => {
       </Container>
 
       <Container width="100%" justify="flex-end">
-        {!disabled && (
-          <Button
-            text="+ ADD"
-            back={"#0b6223"}
-            height={"3rem"}
-            width="30%"
-            color="white"
-            type={"submit"}
-          />
-        )}
+        <Button
+          text="+ ADD"
+          back={"#0b6223"}
+          height={"3rem"}
+          width="30%"
+          color="white"
+          type={"submit"}
+        />
       </Container>
     </form>
   );

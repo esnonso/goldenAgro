@@ -6,31 +6,50 @@ import Button from "../Button";
 import { useScreenSize } from "../Hooks/useScreenSize";
 import UserIcon from "../../Images/def.jpg";
 import Image from "next/image";
+import axios from "axios";
 
 const Reviews = () => {
   const stars = Array(5).fill(0);
   const [count, setCount] = useState(0);
+  const [max, setMax] = useState(0);
   const [screenSize, setScreenSize] = useScreenSize();
   const [chunkedreviews, setChunkedreviews] = useState([]);
+  const [reviews, setReviews] = useState([]);
+
+  const getReviewsHandler = async () => {
+    try {
+      const allReviews = await axios.get("/api/getReviews");
+      if (allReviews.data.length >= 9) setReviews(allReviews.data);
+      else setReviews(dummyReviews);
+    } catch {
+      setReviews(dummyReviews);
+    }
+  };
 
   useEffect(() => {
+    getReviewsHandler();
+  }, []);
+
+  useEffect(() => {
+    setCount(0);
     const phone = window.matchMedia("(max-width: 700px)");
     const tab = window.matchMedia(
       "(min-width: 701px) and ((max-width: 1016px)"
     );
     const desktop = window.matchMedia("(min-width: 1016px)");
     if (reviews) {
-      if (reviews.length >= 3) {
-        if (phone.matches && reviews.length >= 3) {
+      if (reviews.length >= 9) {
+        if (phone.matches && reviews.length >= 9) {
           const joinedArr = [];
-          for (var i = 0; i < 3; i++) {
+          for (var i = 0; i < 9; i++) {
             joinedArr.push([reviews[i]]);
           }
+          setMax(8);
           setChunkedreviews(joinedArr);
         }
-        if (tab.matches && reviews.length >= 6) {
+        if (tab.matches && reviews.length >= 8) {
           const joinedArr = [];
-          for (i = 0; i < 6; i++) {
+          for (i = 0; i < 8; i++) {
             const lastItem = joinedArr[joinedArr.length - 1];
             if (!lastItem || lastItem.length === 2) {
               joinedArr.push([reviews[i]]);
@@ -38,6 +57,7 @@ const Reviews = () => {
               lastItem.push(reviews[i]);
             }
           }
+          setMax(3);
           setChunkedreviews(joinedArr);
         }
         if (desktop.matches && reviews.length >= 9) {
@@ -50,13 +70,15 @@ const Reviews = () => {
               lastItem.push(reviews[i]);
             }
           }
+          setMax(2);
           setChunkedreviews(joinedArr);
         }
       }
     }
-  }, [screenSize]);
+  }, [screenSize, reviews]);
+
   const increaseCountHandler = () => {
-    if (count < 2) {
+    if (count < max) {
       setCount((prevState) => prevState + 1);
     }
   };
@@ -115,7 +137,7 @@ const Reviews = () => {
                   padding="0.4rem 0 0 0"
                   textAlign="center"
                 >
-                  <b>{item.name}</b>
+                  <b>{item.user.name}</b>
                 </PTags>
                 <PTags
                   fontSize="18px"
@@ -145,58 +167,58 @@ const Reviews = () => {
 
 export default Reviews;
 
-const reviews = [
+const dummyReviews = [
   {
     _id: 1,
-    name: "John Doe",
+    user: { id: 2, name: "John Doe" },
     rating: 5,
     comment: "Golden agro rice is the best for all",
   },
   {
     _id: 2,
-    name: "Nonso Nelly",
+    user: { id: 1, name: "Nonso Nelly" },
     rating: 4,
     comment: "Perfect rice for all",
   },
   {
     _id: 3,
-    name: "Big Fish",
+    user: { id: 2, name: "Big Fish" },
     rating: 4.5,
     comment: "Recommended rice for all",
   },
   {
     _id: 4,
-    name: "Ben Carson",
+    user: { id: 3, name: "Ben Carson" },
     rating: 5,
     comment: "Ethical rice service for all",
   },
   {
     _id: 5,
-    name: "Nonny Sharman",
+    user: { id: 5, name: "Nonny Sharman" },
     rating: 5,
     comment: "I love golden agro rice",
   },
   {
     _id: 6,
-    name: "Ben Bonus",
+    user: { id: 6, name: "Ben Bonus" },
     rating: 3,
     comment: "Took time to deliver my product",
   },
   {
     _id: 7,
-    name: "Roncho R",
+    user: { id: 7, name: "Roncho R" },
     rating: 1,
     comment: "Poor customer service",
   },
   {
     _id: 8,
-    name: "Ricky Mort",
+    user: { id: 8, name: "Ricky Mort" },
     rating: 5,
     comment: "I love these guys",
   },
   {
     _id: 9,
-    name: "Rebing John",
+    user: { id: 9, name: "Rebing John" },
     rating: 5,
     comment: "Golden agro is the best for all and recommended for all",
   },

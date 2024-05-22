@@ -44,7 +44,7 @@ export default function Header(props) {
               className={classes.cart}
               onClick={showCartHandler}
             />
-            <PTags fontSize="25px" margin="0 0 0 0.25rem">
+            <PTags fontSize="15px" margin="0 0 0 0.25rem">
               {calculateCartItem()}
             </PTags>
           </Container>
@@ -65,7 +65,7 @@ export default function Header(props) {
 
       {cart && (
         <Modal click={hideCartHandler}>
-          <Cart />
+          <Cart onHide={hideCartHandler} />
         </Modal>
       )}
     </Container>
