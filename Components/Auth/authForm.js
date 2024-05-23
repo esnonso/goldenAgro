@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Container from "../Containers/container";
 import { PTags } from "../Text/index";
-import Button from "../Button";
 import classes from "./index.module.css";
 import axios from "axios";
 import Link from "next/link";

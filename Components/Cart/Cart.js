@@ -24,9 +24,9 @@ export default function Cart(props) {
 
   return (
     <Container width="100%" flex="column">
-      {router.pathname !== "/checkout" && (
+      {router.pathname !== "/checkout" && cartCtx.cart.length !== 0 && (
         <PTags margin="1rem 0 1rem 0" fontSize="20px">
-          Shopping Cart
+          Cart
         </PTags>
       )}
 
