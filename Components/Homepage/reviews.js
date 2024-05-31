@@ -105,7 +105,6 @@ const Reviews = () => {
             font="20px"
             height={"fit-content"}
             click={decreaseCountHandler}
-            color={"#0b6623"}
           />
         </Container>
         <Container alignItems="center" width="90%" margin="0 auto 0 auto">
@@ -157,7 +156,6 @@ const Reviews = () => {
             font="20px"
             height={"fit-content"}
             click={increaseCountHandler}
-            color={"#0b6623"}
           />
         </Container>
       </Container>
