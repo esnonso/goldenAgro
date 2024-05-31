@@ -1,30 +1,3 @@
-.action{
-    color: white;
-    background-color: #139D69;
-    text-decoration: none;
-    width: fit-content;
-    padding: 0.3rem 0.7rem;
-    margin: 0.3rem;
-}
-
-.actions{
-    color: white;
-    background-color: #0f5037;
-    text-decoration: none;
-    width: fit-content;
-    padding: 0.3rem 0.7rem;
-    margin: 0.3rem;
-}
-
-.link {
-    color: rgb(46, 23, 23);
-    background-color: burlywood;
-    text-decoration: none;
-    width: fit-content;
-    padding: 0.3rem 0.7rem;
-    margin: 0.3rem;
-}
-
 .input {
     font: inherit;
     font-size: 14px;
@@ -33,4 +6,17 @@
     border-radius: 5px;
     color: inherit;
     width:100%
+}
+
+.hr{
+    height: 1;
+    background-color: #ccc;
+    width: 100%;
+}
+
+.btn {
+    background-color: white;
+    border:1px #0b6623 solid;
+    padding:0.2rem 0.5rem;
+    border-radius: 5px;
 }
