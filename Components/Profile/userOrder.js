@@ -20,8 +20,15 @@ export default function UserOrders({ order }) {
           <PTags>Price: ₦{numberWithCommas(+item.price)}</PTags>
         </Container>
       ))}
-      <PTags margin="0.5rem 0">Total: ₦{numberWithCommas(+order.total)}</PTags>
-      <PTags>Delivery Status: {order.delivered}</PTags>
+      <PTags margin="0.5rem 0">
+        <b>Total:</b> ₦{numberWithCommas(+order.total)}
+      </PTags>
+      <PTags margin="0.5rem 0">
+        <b>Delivery Status:</b> {order.delivered}
+      </PTags>
+      <PTags>
+        <b>Delivery Address:</b> {order.address}
+      </PTags>
     </Container>
   );
 }

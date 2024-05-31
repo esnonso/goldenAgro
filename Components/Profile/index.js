@@ -36,6 +36,7 @@ export default function UserProfile(props) {
       setOrders(res.data.orders);
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       setError("An error occured getting orders, try again");
       fetchUserHandler();
     }
@@ -145,24 +146,26 @@ export default function UserProfile(props) {
             );
           })}
 
-          <Container width="100%" justify="center">
-            <Button
-              text="Previous"
-              margin="0.5rem"
-              click={decreasePageHandler}
-            />
-            {Array(Math.ceil(totalOrders / perPage))
-              .fill(0)
-              .map((b, i) => (
-                <Button
-                  text={i + 1}
-                  key={i + "b"}
-                  margin="0.5rem"
-                  back={i + 1 === page ? "" : "gray"}
-                />
-              ))}
-            <Button text="Next" margin="0.5rem" click={increasePageHandler} />
-          </Container>
+          {totalOrders > 0 && (
+            <Container width="100%" justify="center">
+              <Button
+                text="Previous"
+                margin="0.5rem"
+                click={decreasePageHandler}
+              />
+              {Array(Math.ceil(totalOrders / perPage))
+                .fill(0)
+                .map((b, i) => (
+                  <Button
+                    text={i + 1}
+                    key={i + "b"}
+                    margin="0.5rem"
+                    back={i + 1 === page ? "" : "gray"}
+                  />
+                ))}
+              <Button text="Next" margin="0.5rem" click={increasePageHandler} />
+            </Container>
+          )}
         </Container>
       </Container>
 

@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema(
     status: String,
     transaction: String,
     message: String,
+    address: { type: String, required: true },
     total: { type: String, required: true },
     delivered: { type: String, default: "Pending" },
   },

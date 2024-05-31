@@ -21,6 +21,13 @@ export default async function handler(req, res) {
       phone: phone,
       status: "User",
     }).save();
+    // const msg = {
+    //   to: "test@example.com",
+    //   from: "test@example.com", // Use the email address or domain you verified above
+    //   subject: "Sending with Twilio SendGrid is Fun",
+    //   text: "and easy to do anywhere, even with Node.js",
+    //   html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+    // };
     return res.status(200).json("Success! Check you email for confirmation");
   } catch (error) {
     if (error.status) {

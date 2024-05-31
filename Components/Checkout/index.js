@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PaystackButton } from "react-paystack";
 import Container from "../Containers/container";
@@ -15,6 +16,7 @@ import Loader from "../Loaders/loader";
 
 export default function Checkout() {
   const router = useRouter();
+  const { status } = useSession();
   const cartCtx = useContext(CartContext);
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -33,7 +35,6 @@ export default function Checkout() {
 
   const getUserHandler = async () => {
     try {
-      if (cartCtx.cart.length < 1) router.replace("/");
       const user = await axios.get("/api/getUser");
       setEmail(user.data.email);
       setAddress(user.data.address);
@@ -85,6 +86,7 @@ export default function Checkout() {
         total: totalPrice,
         items: cartCtx.cart,
         email: email,
+        address: address,
       });
       cartCtx.emptyCart();
       setSuccessMessage("Payment confirmed!");
@@ -117,6 +119,9 @@ export default function Checkout() {
     onSuccess: (reference) => handlePaystackSuccessAction(reference),
     onClose: () => {
       setError("Transaction closed by user!");
+      setTimeout(() => {
+        setError("");
+      }, 2000);
     },
   };
 
@@ -155,7 +160,7 @@ export default function Checkout() {
 
         <Cart />
 
-        {address !== "" && (
+        {address !== "" && cartCtx.cart.length > 0 && (
           <Container with="100%" justify="flex-end">
             <PaystackButton {...componentProps} className="button" />
           </Container>

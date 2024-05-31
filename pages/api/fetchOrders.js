@@ -13,11 +13,14 @@ export default async function handler(req, res) {
     const totalItems = await Order.find({
       email: session.user.email,
     }).countDocuments();
-    if (!totalItems) throw new Error("An error occured");
+
     const orders = await Order.find({ email: session.user.email })
+      .sort([["_id", -1]])
       .skip((currentPage - 1) * perPage)
       .limit(perPage);
-    return res.status(200).json({ orders: orders || [], total: totalItems });
+    return res
+      .status(200)
+      .json({ orders: orders || [], total: totalItems || 0 });
   } catch (error) {
     return res
       .status(500)
