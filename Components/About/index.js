@@ -13,8 +13,8 @@ export default function About() {
         <H1Tags>About GoldenAgro</H1Tags>
       </div>
       <div className={classes.banner}>
-        <Container margin="1rem" padding="1rem" flex="column">
-          <PTags margin="1rem 0" color="white">
+        <Container margin="0 1rem" padding="1rem" flex="column">
+          <p className={classes.paragraph}>
             <span style={spanStyle}>W</span>
             elcome to GoldenAgro, your premium destination for authentic
             Nigerian rice! At GoldenAgro, we take immense pride in offering you
@@ -28,9 +28,9 @@ export default function About() {
             practices. Every grain of rice we offer reflects our commitment to
             excellence, from the fertile fields where it's grown to the
             meticulous processes that ensure its purity and freshness.
-          </PTags>
+          </p>
 
-          <PTags margin="1rem 0" color="white">
+          <p className={classes.paragraph}>
             <span style={spanStyle}>W</span>e work closely with local farmers,
             providing them with the resources and support they need to cultivate
             rice of exceptional quality while respecting the environment and
@@ -45,7 +45,7 @@ export default function About() {
             family feast or preparing a special meal, trust GoldenAgro to bring
             the authentic flavors of Nigeria to your table, one delicious grain
             at a time.
-          </PTags>
+          </p>
         </Container>
       </div>
     </Container>

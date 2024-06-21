@@ -16,7 +16,7 @@ const Button = ({
   const buttonStyles = {
     backgroundColor: back || "#0b6623",
     color: color || "white",
-    border: "1px #b0903d solid",
+    border: border || "1px #b0903d solid",
     width: width,
     height: height,
     borderRadius: borderRadius,

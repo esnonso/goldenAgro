@@ -2,6 +2,10 @@
     margin-top: 1rem;
 }
 
+.stelm_beauty a{
+    color:inherit;
+    text-decoration: none;
+}
 
 
 .newsletter input{

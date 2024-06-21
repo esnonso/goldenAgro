@@ -13,44 +13,51 @@ export default function Contact() {
         <PTags fontSize="20px" fontWeight="600" margin="1rem 0 0.5rem 0">
           Contact Information
         </PTags>
-        <PTags>
+        <Container flex="column">
           <b>Phone</b>
           <ul>
-            <li>Sales Enquiry: 08123456789</li>
-            <li>Customer care: 08123456789</li>
+            <li>Sales Enquiry: 08034906617</li>
+            <li>Customer care: 08155157575</li>
           </ul>
-        </PTags>
-        <PTags>
+        </Container>
+        <Container flex="column">
           <b>Email</b>
           <ul>
-            <li>goldenagro@gmail.com</li>
+            <li>admin@goldenagro.ng</li>
+            <li>Goldenagroindltd@gmail.com</li>
+            <li>support@goldenagroind.com</li>
           </ul>
-        </PTags>
-        <PTags>
+        </Container>
+        <Container flex="column">
           <b>Address</b>
           <ul>
-            <li>No 2 Gwagwalada road Mile 2</li>
+            <li>
+              No 5 Divine Grace close, Rumuodara, PortHarcourt, Rivers State,
+              Nigeria.
+            </li>
           </ul>
-        </PTags>
-        <PTags>
+        </Container>
+        <Container flex="column">
           <b>Business Hours</b>
           <ul>
             <li>Monday to Friday: 8:00am - 5:00pm</li>
             <li>Saturdays: 7:00am - 3:00pm</li>
           </ul>
-        </PTags>
+        </Container>
 
         <PTags fontSize="20px" fontWeight="600" margin="1rem 0 0.5rem 0">
           Wholesale enquiries
         </PTags>
-        <PTags>
-          Interested in partnering with GoldenAgro for wholesale opportunities?
-          We welcome inquiries from retailers, distributors, and businesses
-          looking to offer our premium Nigerian rice to their customers. Please
-          reach out to us using the contact information provided above, and one
-          of our representatives will be in touch with you shortly to discuss
-          partnership opportunities.
-        </PTags>
+        <div className={classes.wholesale}>
+          <PTags>
+            Interested in partnering with GoldenAgro for wholesale
+            opportunities? We welcome inquiries from retailers, distributors,
+            and businesses looking to offer our premium Nigerian rice to their
+            customers. Please reach out to us using the contact information
+            provided above, and one of our representatives will be in touch with
+            you shortly to discuss partnership opportunities.
+          </PTags>
+        </div>
       </Container>
     </Container>
   );

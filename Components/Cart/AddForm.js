@@ -4,6 +4,7 @@ import Container from "../Containers/container";
 import { PTags } from "../Text";
 import Button from "../Button";
 import { CartContext } from "../Context/cart";
+import { products } from "../Products";
 
 const AddForm = (props) => {
   const cartCtx = useContext(CartContext);
@@ -102,10 +103,3 @@ const AddForm = (props) => {
 };
 
 export default AddForm;
-
-const products = [
-  { id: 1, size: "5kg", price: 10000 },
-  { id: 2, size: "10kg", price: 20000 },
-  { id: 3, size: "25kg", price: 45000 },
-  { id: 4, size: "50kg", price: 80000 },
-];

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import Container from "../Containers/container";
 import Button from "../Button";
 import MobileTag from "./mobileTag";
@@ -9,6 +10,8 @@ import Reviews from "./reviews";
 import ReviewForm from "../Reviews";
 import AddForm from "../Cart/AddForm";
 import Modal from "../Modal";
+import DiagonalLines from "../Lines";
+import { products } from "../Products";
 
 const Homepage = () => {
   const [cartForm, showCartForm] = useState(false);
@@ -19,6 +22,10 @@ const Homepage = () => {
 
   const showReviewFormHandler = () => showReviewForm(true);
   const hideReviewFormHandler = () => showReviewForm(false);
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   return (
     <Container flex="column" width="100%" margin="3.5rem 0 0 0">
@@ -46,11 +53,11 @@ const Homepage = () => {
         </div>
       </Container>
 
-      <div className={classes["head-tag-home"]}>
-        <PTags margin="7rem 0 1rem 1rem" fontSize="22px">
-          Planning for an event?
-        </PTags>
-      </div>
+      <DiagonalLines />
+
+      <PTags margin="4rem 0 1rem 1rem" fontSize="22px">
+        Planning for an event?
+      </PTags>
 
       <div className={classes["advert"]}>
         <div className={classes["advert-img"]}>
@@ -81,7 +88,7 @@ const Homepage = () => {
         <Container flex="column" justify="center" padding="0 1rem">
           <Container margin="1rem 0 0 0">
             <span className={classes["star"]}>★</span> With our quality premium
-            rice
+            non-sticky rice
           </Container>
           <Container margin="1rem 0 0 0">
             <span className={classes["star"]}>★</span> Make perfect rice
@@ -154,106 +161,62 @@ const Homepage = () => {
         </Container>
       </div>
 
+      <DiagonalLines />
+
       <div className={classes["top-categories"]}>
-        <PTags margin="7rem 0 0 1rem" fontSize="22px">
+        <PTags margin="4rem 0 0 1rem" fontSize="22px">
           Top Categories
         </PTags>
       </div>
 
-      <ContainerFlexColumn margin="0 0 1rem 0" padding="0 2%" wrap="wrap">
-        <div className={classes["small-bag"]}>
-          <Container
-            color="#0b6623"
-            textColor="white"
-            opacity="0.8"
-            height="3rem"
-            width="100%"
-            align="center"
-            padding="0 0.5rem"
-          >
-            <Button
-              text="+Add To Cart"
-              width="100%"
-              back={"#0b6623"}
-              height={"2.5rem"}
-              padding={"0 2rem"}
-              color="white"
-              font="20px"
-              click={showCartFormHandler}
+      <ContainerFlexColumn
+        margin="0 0 1rem 0"
+        padding="0 2%"
+        wrap="wrap"
+        justify="space-around"
+      >
+        {products.map((p) => (
+          <div className={classes["products-div"]} key={p.id}>
+            <Image
+              src={p.image}
+              alt="rice bag"
+              className={classes["rice-bag-img"]}
             />
-          </Container>
-        </div>
-        <div className={classes["medium-bag"]}>
-          <Container
-            color="#0b6623"
-            textColor="white"
-            opacity="0.8"
-            height="3rem"
-            width="100%"
-            align="center"
-            padding="0 0.5rem"
-          >
-            <Button
-              text="+Add To Cart"
+            <PTags width="100%" margin="0 0 0.5rem 0">
+              Golden Agro premium rice - {p.size}
+            </PTags>
+            <PTags width="100%" margin="0 0 0.5rem 0">
+              <b>₦ {numberWithCommas(p.price)}</b>
+            </PTags>
+            <Container
+              color="#0b6623"
+              textColor="white"
+              height="3rem"
               width="100%"
-              back={"#0b6623"}
-              height={"2.5rem"}
-              padding={"0 2rem"}
-              color="white"
-              font="20px"
-              click={showCartFormHandler}
-            />
-          </Container>
-        </div>
-        <div className={classes["average-bag"]}>
-          <Container
-            color="#0b6623"
-            textColor="white"
-            opacity="0.8"
-            height="3rem"
-            width="100%"
-            align="center"
-            padding="0 0.5rem"
-          >
-            <Button
-              text="+Add To Cart"
-              width="100%"
-              back={"#0b6623"}
-              height={"2.5rem"}
-              padding={"0 2rem"}
-              color="white"
-              font="20px"
-              click={showCartFormHandler}
-            />
-          </Container>
-        </div>
-        <div className={classes["big-bag"]}>
-          <Container
-            color="#0b6623"
-            textColor="white"
-            opacity="0.8"
-            height="3rem"
-            width="100%"
-            align="center"
-            padding="0 0.5rem"
-          >
-            <Button
-              text="+Add To Cart"
-              width="100%"
-              back={"#0b6623"}
-              height={"2.5rem"}
-              padding={"0 2rem"}
-              color="white"
-              font="20px"
-              click={showCartFormHandler}
-            />
-          </Container>
-        </div>
+              align="center"
+              padding="0 0.5rem"
+            >
+              <Button
+                text="+Add To Cart"
+                width="100%"
+                back={"#0b6623"}
+                height={"2.5rem"}
+                padding={"0 2rem"}
+                color="white"
+                font="20px"
+                border="none"
+                click={showCartFormHandler}
+              />
+            </Container>
+          </div>
+        ))}
       </ContainerFlexColumn>
 
-      <Container margin="7rem 0" padding="0 1rem" flex="column" width="100%">
+      <DiagonalLines />
+
+      <Container margin="4rem 0" padding="0 1rem" flex="column" width="100%">
         <PTags textAlign="center" width="100%" fontSize="25px">
-          Customer Reviews
+          What our customers say about Us
         </PTags>
 
         <Reviews />

@@ -7,6 +7,7 @@ import In from "../../Images/linked.png";
 import Insta from "../../Images/insta.png";
 import { PTags } from "../Text";
 import classes from "./index.module.css";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -14,7 +15,7 @@ const Footer = () => {
       flex="column"
       width="100%"
       margin="6rem 0 0 0"
-      padding="1rem"
+      padding="4rem 1rem"
       color="#b0903d"
       textColor="white"
     >
@@ -28,13 +29,28 @@ const Footer = () => {
           >
             SUPPORT
           </PTags>
-          <PTags textAlign="left" margin="0 0 0.3rem 0">
+          <PTags
+            textAlign="left"
+            margin="0 0 0.3rem 0"
+            fontSize="14px"
+            color="#CCCCCC"
+          >
             FAQS
           </PTags>
-          <PTags textAlign="left" margin="0 0 0.3rem 0">
+          <PTags
+            textAlign="left"
+            margin="0 0 0.3rem 0"
+            fontSize="14px"
+            color="#CCCCCC"
+          >
             Track order
           </PTags>
-          <PTags textAlign="left" margin="0 0 1rem 0">
+          <PTags
+            textAlign="left"
+            margin="0 0 1rem 0"
+            fontSize="14px"
+            color="#CCCCCC"
+          >
             Contact us
           </PTags>
         </div>
@@ -48,14 +64,29 @@ const Footer = () => {
           >
             GOLDENAGRO
           </PTags>
-          <PTags textAlign="left" margin="0 0 0.3rem 0">
-            Home
+          <PTags
+            textAlign="left"
+            margin="0 0 0.3rem 0"
+            fontSize="14px"
+            color="#CCCCCC"
+          >
+            <Link href="/">Home</Link>
           </PTags>
-          <PTags textAlign="left" margin="0 0 0.3rem 0">
-            About Us
+          <PTags
+            textAlign="left"
+            margin="0 0 0.3rem 0"
+            fontSize="14px"
+            color="#CCCCCC"
+          >
+            <Link href="/about">About Us</Link>
           </PTags>
-          <PTags textAlign="left" margin="0 0 0.3rem 0">
-            Contact Us
+          <PTags
+            textAlign="left"
+            margin="0 0 0.3rem 0"
+            fontSize="14px"
+            color="#CCCCCC"
+          >
+            <Link href="/contact">Contact Us</Link>
           </PTags>
         </div>
 
@@ -88,7 +119,9 @@ const Footer = () => {
         <Image src={Insta} alt="" width={25} height={25} />
       </div>
       <Container margin="0.2rem 0 1rem 0" justify="center">
-        <small>GoldenAgro all rights reserved. 2023</small>
+        <small style={{ color: "#36454f" }}>
+          GoldenAgro all rights reserved. 2023
+        </small>
       </Container>
     </Container>
   );

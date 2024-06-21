@@ -11,7 +11,7 @@
     align-items:center;
     justify-content: center;
     box-sizing: border-box;
-    color:white
+    color:#CCCCCC;
 }
 
 .banner{
@@ -29,8 +29,22 @@
     box-sizing: border-box;
 }
 
+.paragraph{
+    width:100%;
+    margin: 2rem auto;
+    color: #CCCCCC;
+    opacity: 7.5;
+    text-align: justify;
+}
+
+
+
 @media screen and (min-width: 900px) {
     .banner{
         background-size: 30%;
+    }
+
+    .paragraph{
+        width:70%;
     }
 }

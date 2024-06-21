@@ -1,0 +1,33 @@
+.diagonal-lines {
+    background: -o-linear-gradient(275deg, white, #0b6623 40%, white);
+    background: linear-gradient(175deg, white, #0b6623 40%, white);
+    width: 100%;
+    background-size: 100% 10px;
+    -webkit-transform: skewY(-1.5deg);
+    -ms-transform: skewY(-1.5deg);
+    transform: skewY(-1.5deg);
+}
+
+.diagonal-one {
+    height: 0.7rem;
+    margin-bottom: 0.1rem;
+}
+
+.diagonal-two {
+    height: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.diagonal-three {
+    height: 0.3rem;
+    margin-bottom: 0.3rem;
+}
+
+.diagonal-four {
+    height: 0.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.diagonal-five {
+    height: 0.1rem;
+}

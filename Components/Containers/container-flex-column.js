@@ -4,7 +4,7 @@ const ContainerFlexColumn = (props) => {
   const styles = {
     width: props.width || "100%",
     backgroundColor: props.color,
-    justifyContent: props.justifyContent,
+    justifyContent: props.justify,
     alignItems: props.alignItems,
     alignContent: props.alignContent,
     margin: props.margin,

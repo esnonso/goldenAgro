@@ -13,3 +13,14 @@
     box-sizing: border-box;
     color:white
 }
+
+.wholesale{
+    width:90%;
+    text-align: justify;
+}
+
+@media screen and (min-width:900px) {
+    .wholesale{
+        width: 70%;
+    }
+}
