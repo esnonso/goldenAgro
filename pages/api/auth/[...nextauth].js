@@ -25,6 +25,7 @@ export const options = {
             user.password
           );
           if (!comparePwd) throw new Error("Invalid email or password");
+          if (user.confirmed === false) throw new Error("Email not verified");
           return user;
         } catch (err) {
           throw new Error(err.message || "An error occured");

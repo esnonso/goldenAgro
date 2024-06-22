@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Container from "../Containers/container";
 import Button from "../Button";
@@ -16,12 +16,21 @@ import { products } from "../Products";
 const Homepage = () => {
   const [cartForm, showCartForm] = useState(false);
   const [reviewForm, showReviewForm] = useState(false);
+  const [quantityForm, showQuantityForm] = useState(false);
+  const [size, setSize] = useState("");
 
   const showCartFormHandler = () => showCartForm(true);
   const hideCartFormHandler = () => showCartForm(false);
 
   const showReviewFormHandler = () => showReviewForm(true);
   const hideReviewFormHandler = () => showReviewForm(false);
+
+  const hideQtyFormHandler = () => setSize("");
+
+  useEffect(() => {
+    if (size) showQuantityForm(true);
+    else showQuantityForm(false);
+  }, [size]);
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -205,7 +214,7 @@ const Homepage = () => {
                 color="white"
                 font="20px"
                 border="none"
-                click={showCartFormHandler}
+                click={() => setSize(p.size)}
               />
             </Container>
           </div>
@@ -239,6 +248,12 @@ const Homepage = () => {
       {cartForm && (
         <Modal click={hideCartFormHandler}>
           <AddForm onHide={hideCartFormHandler} />
+        </Modal>
+      )}
+
+      {quantityForm && (
+        <Modal click={hideQtyFormHandler}>
+          <AddForm onHide={hideQtyFormHandler} size={size} />
         </Modal>
       )}
 

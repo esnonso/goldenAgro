@@ -14,20 +14,29 @@ export default async function handler(req, res) {
       error.status = 409;
       throw error;
     }
-    await new User({
+
+    const code = Math.floor(Math.random() * 10000);
+
+    const user = await new User({
       name: `${firstname} ${lastname}`,
       email: email.toLowerCase(),
       password: await bcrypt.hash(password, 10),
       phone: phone,
+      confirmationCode: code,
       status: "User",
     }).save();
-    // const msg = {
-    //   to: "test@example.com",
-    //   from: "test@example.com", // Use the email address or domain you verified above
-    //   subject: "Sending with Twilio SendGrid is Fun",
-    //   text: "and easy to do anywhere, even with Node.js",
-    //   html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-    // };
+
+    const link = `${process.env.URL}/verify=${user.email}code=${user.confirmationCode}`;
+
+    const msg = {
+      to: user.email,
+      from: { name: process.env.MAIL_NAME, email: process.env.MAIL_ADDRESS },
+      templateId: "d-2fa1cff2520e485493c4a9301045f9ac",
+      dynamicTemplateData: { name: user.name, link: link },
+    };
+
+    await sgMail.send(msg);
+
     return res.status(200).json("Success! Check you email for confirmation");
   } catch (error) {
     if (error.status) {

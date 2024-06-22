@@ -11,6 +11,10 @@ const AddForm = (props) => {
   const [quantity, setQuantity] = useState("");
   const [size, setSize] = useState("");
 
+  useEffect(() => {
+    if (props.size) setSize(props.size);
+  }, []);
+
   const inputChangeHandler = (setState) => (e) => {
     setState(e.target.value);
   };
@@ -46,21 +50,29 @@ const AddForm = (props) => {
       <PTags fontSize="20px" width="100%" textAlign="center">
         Add to Cart
       </PTags>
-      <Container width="100%" margin="2rem 0">
-        <PTags width="50%">Size:</PTags>
-        <Container width="50%" justify="flex-end">
-          <select
-            className={classes["select"]}
-            value={size}
-            onChange={inputChangeHandler(setSize)}
-          >
-            <option></option>
-            {products.map((p) => (
-              <option key={p.id}>{p.size}</option>
-            ))}
-          </select>
+      {!props.size && (
+        <Container width="100%" margin="2rem 0">
+          <PTags width="50%">Size:</PTags>
+          <Container width="50%" justify="flex-end">
+            <select
+              className={classes["select"]}
+              value={size}
+              onChange={inputChangeHandler(setSize)}
+            >
+              <option></option>
+              {products.map((p) => (
+                <option key={p.id}>{p.size}</option>
+              ))}
+            </select>
+          </Container>
         </Container>
-      </Container>
+      )}
+
+      {props.size && (
+        <Container width="100%" margin="2rem 0">
+          <p>Golden Agro premium rice - {size}</p>
+        </Container>
+      )}
 
       <Container width="100%" margin="0 0 2rem 0">
         <PTags width="50%">Quantity:</PTags>
