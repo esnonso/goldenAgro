@@ -97,7 +97,6 @@ const AuthForm = (props) => {
               },
             }
           );
-          console.log(foundCart.data.cart);
           dispatch(cartActions.replaceCart(foundCart.data.cart));
           localStorage.removeItem("cart");
         }

@@ -140,6 +140,9 @@ export default function UserProfile(props) {
                 text="Previous"
                 margin="0.5rem"
                 click={decreasePageHandler}
+                back="white"
+                border="none"
+                color="black"
               />
               {Array(Math.ceil(totalOrders / perPage))
                 .fill(0)
@@ -149,9 +152,18 @@ export default function UserProfile(props) {
                     key={i + "b"}
                     margin="0.5rem"
                     back={i + 1 === page ? "" : "gray"}
+                    border="none"
+                    color="white"
                   />
                 ))}
-              <Button text="Next" margin="0.5rem" click={increasePageHandler} />
+              <Button
+                text="Next"
+                margin="0.5rem"
+                click={increasePageHandler}
+                back="white"
+                border="none"
+                color="black"
+              />
             </Container>
           )}
         </Container>

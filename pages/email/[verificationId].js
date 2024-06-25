@@ -1,14 +1,13 @@
 import Head from "next/head";
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Loader from "@/Components/Loaders/loader";
 import { connectDatabase } from "@/Mongodb";
+import axios from "axios";
+
+import Loader from "@/Components/Loaders/loader";
 import Container from "@/Components/Containers/container";
 import User from "@/Mongodb/Models/user";
-import axios from "axios";
-import Link from "next/link";
 import { PTags } from "@/Components/Text";
-import Alert from "@/Components/Alert";
 
 export default function AboutPage(props) {
   const router = useRouter();
@@ -33,7 +32,6 @@ export default function AboutPage(props) {
 
   useEffect(() => {
     verifyEmailHandler();
-    console.log("n");
   }, []);
 
   return (
@@ -66,7 +64,7 @@ export async function getStaticPaths() {
     fallback: "blocking",
     paths: users.map((u) => ({
       params: {
-        verificationId: `${process.env.URL}/verify=${u.email}code=${u.confirmationCode}`,
+        verificationId: `${process.env.URL}/email/verify=${u.email}code=${u.confirmationCode}`,
       },
     })),
   };

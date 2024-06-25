@@ -45,17 +45,21 @@ export default async function handler(req, res) {
         products: items,
         address: address,
         date: new Date(),
-        total: total,
+        total: `₦ ${numberWithCommas(total)}`,
         shipdate:
           new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) +
           " to " +
           new Date(Date.now() + 12096e5),
       },
     };
+    res.status(200).json("Your order has been received");
 
-    await sgMail.send(msg);
-    return res.status(200).json("Your order has been received");
+    return sgMail.send(msg);
   } catch (error) {
     return res.status(500).json("An error occured");
   }
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
