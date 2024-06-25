@@ -1,5 +1,5 @@
 .about-header {
-    height: 10rem;
+    height: 250px;
     width: 100%;
     display: flex;
     background-color: #0b6623;
@@ -7,28 +7,13 @@
     background-size: 100%;
     background-position: 60% 100%;
     background-blend-mode: multiply;
-    background-image: url("../../Images/about.jpg");
+    background-image: url("../../Images/logo.png");
     align-items:center;
     justify-content: center;
     box-sizing: border-box;
-    color:#CCCCCC;
+    color:white;
 }
 
-.banner{
-    background-color: #E79C59;
-    margin: 5rem auto 0 auto;
-    width: 90%;
-    display: flex;
-    background-repeat: no-repeat;
-    background-size: 120%;
-    background-position: center center;
-    background-blend-mode: multiply;
-    background-image: url("../../Images/about.jpeg");
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-    box-sizing: border-box;
-}
 
 .paragraph{
     width:100%;
@@ -40,10 +25,10 @@
 
 
 
-@media screen and (min-width: 900px) {
-    .banner{
-        background-size: 30%;
-    }
+@media screen and (min-width: 700px) {
+   .about-header{
+    background-image: url("../../Images/ga-desktop.png");
+   }
 
     .paragraph{
         width:70%;

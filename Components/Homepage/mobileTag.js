@@ -12,8 +12,8 @@ const MobileTag = (props) => {
       opacity="0.9"
       textColor="white"
     >
-      <H1Tags margin="0.3rem" fontSize="25px">
-        Premium Nigerian Rice
+      <H1Tags margin="0.3rem" fontSize="22px">
+        Buy Premium Nigerian Rice
       </H1Tags>
       <PTags margin="0.3rem">20% discount on all products</PTags>
       <Button

@@ -8,6 +8,7 @@ import axios from "axios";
 import { uiActions } from "../Redux/ui-slice";
 import { cartActions } from "../Redux/cart-slice";
 import Container from "../Containers/container";
+import Logo from "../../Images/logo.png";
 import Bag from "../../Images/cart.png";
 import classes from "./header.module.css";
 import Footer from "../Footer";
@@ -119,6 +120,7 @@ export default function Header(props) {
         <Container align="center">
           <Link href="/" className={classes.logo}>
             GOLDEN<span style={{ color: "#0b6623" }}>AGRO</span>
+            {/* <Image src={Logo} alt="golden-agro-logo" width="150" height="50" /> */}
           </Link>
 
           {/* <Image src={Logo} alt="logo-cross" width={35} height={35} /> */}

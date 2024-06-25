@@ -233,13 +233,22 @@ const AuthForm = (props) => {
       )}
 
       {!props.register && (
-        <Container width="100%" padding="0 1rem 0.5rem 1rem">
+        <Container width="100%" padding="0 1rem 0.5rem 1rem" flex="column">
           <Link
             href="/register"
             style={{ textDecoration: "none", fontSize: "12px" }}
           >
-            Click to register
-          </Link>{" "}
+            Not registered? Click to register
+          </Link>
+          <Link
+            href="/forgot-password"
+            style={{
+              textDecoration: "none",
+              fontSize: "12px",
+            }}
+          >
+            Forgot Password? Click to reset password
+          </Link>
         </Container>
       )}
 

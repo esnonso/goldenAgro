@@ -42,7 +42,7 @@ export default function AboutPage(props) {
         <title>Verify Email</title>
         <meta
           name="description"
-          content="Golden Agro Farms, Buy premium Nigerian rice"
+          content="Golden Agro Industries LTD. Buy premium Nigerian rice, wholesale and retail in Nigeria"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

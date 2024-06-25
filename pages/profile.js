@@ -7,8 +7,8 @@ export default function User() {
       <Head>
         <title>Profile</title>
         <meta
-          name="moving and delivery company in Lagos, Nigeria"
-          content="moving services, delivery services"
+          name="description"
+          content="Golden Agro Industries LTD. Buy premium Nigerian rice, wholesale and retail in Nigeria"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* <link rel="icon" href="/logo.ico" /> */}

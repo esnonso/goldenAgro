@@ -41,7 +41,7 @@ const Homepage = () => {
     <Container flex="column" width="100%" margin="3.5rem 0 0 0">
       <Container width="100%">
         <div className={classes["word"]}>
-          <H1Tags margin="0.3rem">Premium Nigerian Rice</H1Tags>
+          <H1Tags margin="0.3rem">Buy Premium Nigerian Rice</H1Tags>
           <PTags margin="0.3rem" width="70%">
             20% discount on all products
           </PTags>

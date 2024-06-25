@@ -62,7 +62,7 @@ const Footer = () => {
             fontWeight="600"
             color="#0b6623"
           >
-            GOLDENAGRO
+            GOLDEN AGRO
           </PTags>
           <PTags
             textAlign="left"
@@ -120,7 +120,7 @@ const Footer = () => {
       </div>
       <Container margin="0.2rem 0 1rem 0" justify="center">
         <small style={{ color: "#36454f" }}>
-          GoldenAgro all rights reserved. 2023
+          Golden Agro Industries LTD all rights reserved. 2023
         </small>
       </Container>
     </Container>
