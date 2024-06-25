@@ -1,7 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PaystackButton } from "react-paystack";
+import { useDispatch, useSelector } from "react-redux";
+
+import { cartActions } from "../Redux/cart-slice";
 import Container from "../Containers/container";
 import Modal from "../Modal";
 import Cart from "../Cart/Cart";
@@ -11,14 +14,15 @@ import classes from "./index.module.css";
 import { allState } from "../Objects/states";
 import axios from "axios";
 import Alert from "../Alert";
-import { CartContext } from "../Context/cart";
 import Loader from "../Loaders/loader";
 
 export default function Checkout() {
   const router = useRouter();
   const { status } = useSession();
-  const cartCtx = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.items);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -38,6 +42,7 @@ export default function Checkout() {
       const user = await axios.get("/api/getUser");
       setEmail(user.data.email);
       setAddress(user.data.address);
+      setName(user.data.name);
       if (!user.data.address) setShowAddressForm(true);
     } catch (error) {
       setError(error.message);
@@ -84,11 +89,12 @@ export default function Checkout() {
         message: reference.message,
         transaction: reference.transaction,
         total: totalPrice,
-        items: cartCtx.cart,
+        items: cart,
         email: email,
+        name: name,
         address: address,
       });
-      cartCtx.emptyCart();
+      dispatch(cartActions.emptyCart());
       setSuccessMessage("Payment confirmed!");
     } catch (err) {
       setError(
@@ -103,7 +109,7 @@ export default function Checkout() {
     }
   };
 
-  const totalPrice = cartCtx.cart.reduce(
+  const totalPrice = cart.reduce(
     (acc, item) => acc + +item.quantity * +item.price,
     0
   );
@@ -160,7 +166,7 @@ export default function Checkout() {
 
         <Cart />
 
-        {address !== "" && cartCtx.cart.length > 0 && (
+        {address !== "" && cart.length > 0 && (
           <Container with="100%" justify="flex-end">
             <PaystackButton {...componentProps} className="button" />
           </Container>

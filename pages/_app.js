@@ -1,16 +1,17 @@
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
+import { Provider } from "react-redux";
 import Header from "@/Components/Header";
-import CartContextProvider from "@/Components/Context/cart";
+import store from "@/Components/Redux";
 
 export default function App({ Component, pageProps }) {
   return (
     <SessionProvider>
-      <CartContextProvider>
+      <Provider store={store}>
         <Header>
           <Component {...pageProps} />
         </Header>
-      </CartContextProvider>
+      </Provider>
     </SessionProvider>
   );
 }

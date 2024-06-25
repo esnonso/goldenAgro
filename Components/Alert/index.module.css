@@ -21,6 +21,11 @@
    color: #155724;
 }
 
+.pending-alert{
+    background-color: blue;
+    color:red;
+}
+
 .text-container {
     width: 100%;
     display: flex;

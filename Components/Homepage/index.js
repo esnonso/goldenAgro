@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import Image from "next/image";
 import Container from "../Containers/container";
 import Button from "../Button";
@@ -64,8 +65,8 @@ const Homepage = () => {
 
       <DiagonalLines />
 
-      <PTags margin="4rem 0 1rem 1rem" fontSize="22px">
-        Planning for an event?
+      <PTags margin="5rem 0 1rem 1rem" fontSize="22px">
+        Planning an event?
       </PTags>
 
       <div className={classes["advert"]}>
@@ -96,16 +97,16 @@ const Homepage = () => {
         </div>
         <Container flex="column" justify="center" padding="0 1rem">
           <Container margin="1rem 0 0 0">
-            <span className={classes["star"]}>★</span> With our quality premium
+            <span className={classes["star"]}>★ </span> With our quality premium
             non-sticky rice
           </Container>
           <Container margin="1rem 0 0 0">
-            <span className={classes["star"]}>★</span> Make perfect rice
+            <span className={classes["star"]}>★ </span> Make perfect rice
             delicacies for your guests
           </Container>
           <Container margin="1rem 0 0 0">
-            <span className={classes["star"]}>★</span> Grace your event with our
-            premium rice
+            <span className={classes["star"]}>★ </span> Grace your event with
+            our premium rice
           </Container>
         </Container>
       </div>
@@ -113,7 +114,7 @@ const Homepage = () => {
       <Container
         width="100%"
         justify="space-between"
-        margin="7rem 0 1rem 0"
+        margin="5rem 0 0 0"
         padding="0 1rem"
       >
         <PTags textAlign="left" fontSize="25px">
@@ -152,17 +153,17 @@ const Homepage = () => {
         </div>
         <Container flex="column" align="center" justify="center">
           <Container margin="0.5rem 0 0 0">
-            <span className={classes["star"]}>★</span>
+            <span className={classes["star"]}>★ </span>
             <PTags>Breakfast is the most important meal of the day</PTags>
           </Container>
           <Container margin="0.5rem 0 0 0">
-            <span className={classes["star"]}>★</span>
+            <span className={classes["star"]}>★ </span>
             <PTags>
               Golden Agro premium rice contains Vitamin D from healthy bones
             </PTags>
           </Container>
           <Container margin="0.5rem 0 0 0">
-            <span className={classes["star"]}>★</span>
+            <span className={classes["star"]}>★ </span>
             <PTags>
               Give yourself and family a nutritous and premium breakfast
             </PTags>
@@ -173,17 +174,12 @@ const Homepage = () => {
       <DiagonalLines />
 
       <div className={classes["top-categories"]}>
-        <PTags margin="4rem 0 0 1rem" fontSize="22px">
+        <PTags margin="5rem 0 0 1rem" fontSize="22px">
           Top Categories
         </PTags>
       </div>
 
-      <ContainerFlexColumn
-        margin="0 0 1rem 0"
-        padding="0 2%"
-        wrap="wrap"
-        justify="space-around"
-      >
+      <div className={classes["products-container"]}>
         {products.map((p) => (
           <div className={classes["products-div"]} key={p.id}>
             <Image
@@ -198,7 +194,7 @@ const Homepage = () => {
               <b>₦ {numberWithCommas(p.price)}</b>
             </PTags>
             <Container
-              color="#0b6623"
+              // color="#0b6623"
               textColor="white"
               height="3rem"
               width="100%"
@@ -207,23 +203,23 @@ const Homepage = () => {
             >
               <Button
                 text="+Add To Cart"
-                width="100%"
+                // width="30%"
                 back={"#0b6623"}
                 height={"2.5rem"}
                 padding={"0 2rem"}
                 color="white"
-                font="20px"
+                font="inherit"
                 border="none"
                 click={() => setSize(p.size)}
               />
             </Container>
           </div>
         ))}
-      </ContainerFlexColumn>
+      </div>
 
       <DiagonalLines />
 
-      <Container margin="4rem 0" padding="0 1rem" flex="column" width="100%">
+      <Container margin="5rem 0" padding="0 1rem" flex="column" width="100%">
         <PTags textAlign="center" width="100%" fontSize="25px">
           What our customers say about Us
         </PTags>

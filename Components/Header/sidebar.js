@@ -1,4 +1,8 @@
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useDispatch } from "react-redux";
+
+import { cartActions } from "../Redux/cart-slice";
 import Link from "next/link";
 import Container from "../Containers/container";
 import Button from "../Button";
@@ -13,6 +17,11 @@ const links = [
 
 export default function Sidebar(props) {
   const { status } = useSession();
+
+  const logOutHandler = async () => {
+    signOut();
+  };
+
   return (
     <>
       <Backdrop click={props.onHide} />
@@ -47,11 +56,18 @@ export default function Sidebar(props) {
             </li>
           ))}
           {status === "authenticated" ? (
-            <li>
-              <Link href={"/profile"} onClick={props.onHide}>
-                MY PROFILE
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link href={"/profile"} onClick={props.onHide}>
+                  MY PROFILE
+                </Link>
+              </li>
+              <li>
+                <button onClick={logOutHandler} className={classes.logout}>
+                  LOGOUT
+                </button>
+              </li>
+            </>
           ) : (
             <li>
               <Link href={"/login"} onClick={props.onHide}>

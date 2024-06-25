@@ -1,28 +1,117 @@
-import { useState, useContext } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+import Link from "next/link";
+import axios from "axios";
+
+import { uiActions } from "../Redux/ui-slice";
+import { cartActions } from "../Redux/cart-slice";
 import Container from "../Containers/container";
 import Bag from "../../Images/cart.png";
-import { CartContext } from "../Context/cart";
 import classes from "./header.module.css";
-import Link from "next/link";
 import Footer from "../Footer";
-import { PTags } from "../Text";
 import Cart from "../Cart/Cart";
 import Modal from "../Modal";
 import Sidebar from "./sidebar";
+import Alert from "../Alert";
+import Loader from "../Loaders/loader";
+
+let initialState = true;
 
 export default function Header(props) {
-  const cartCtx = useContext(CartContext);
-  const [cart, showCart] = useState(false);
-  const [sidebar, showSidebar] = useState(false);
+  const dispatch = useDispatch();
+  const { status } = useSession();
+  const showCart = useSelector((state) => state.ui.cartIsVisible);
+  const showSidebar = useSelector((state) => state.ui.sidebarIsVisible);
+  const cart = useSelector((state) => state.cart.items);
 
-  const showSidebarHandler = () => showSidebar(true);
-  const hideSidebarHandler = () => showSidebar(false);
-  const showCartHandler = () => showCart(true);
-  const hideCartHandler = () => showCart(false);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const calculateCartItem = () =>
-    cartCtx.cart.reduce((acc, item) => acc + item.quantity, 0);
+    cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  const toggleCartHandler = () => {
+    dispatch(uiActions.toggleCart());
+  };
+
+  const toggleSidebarHandler = () => {
+    dispatch(uiActions.toggleSidebar());
+  };
+  //LOAD CART DATA FROM DATABASE
+  const getItemsInCartHandler = async () => {
+    try {
+      if (status === "authenticated") {
+        const foundCart = await axios.get("/api/getCart");
+        if (foundCart.data.length > 0) {
+          dispatch(cartActions.replaceCart(foundCart.data));
+        }
+      }
+      if (typeof window !== "undefined" && status === "unauthenticated") {
+        const foundCart =
+          (await JSON.parse(localStorage.getItem("cart"))) || [];
+
+        if (foundCart.length > 0) {
+          dispatch(cartActions.replaceCart(foundCart));
+        }
+      }
+    } catch (error) {
+      setError("Error loading cart");
+      setTimeout(() => {
+        setError("");
+      }, 2000);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "authenticated" || status === "unauthenticated")
+      getItemsInCartHandler();
+  }, [status]);
+
+  //UPDATE ITEMS IN CART
+  const updateItemsInCartHandler = async () => {
+    try {
+      setLoading(true);
+      if (status === "authenticated") {
+        await axios.post(
+          "/api/updateCart",
+          { cart: cart },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        localStorage.removeItem("cart");
+      }
+      if (typeof window !== "undefined" && status === "unauthenticated") {
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+      setLoading(false);
+      setSuccessMessage("Cart updated");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 2000);
+    } catch {
+      setLoading(false);
+      setError("Error updating cart");
+      setTimeout(() => {
+        setError("");
+      }, 2000);
+    }
+  };
+
+  useEffect(() => {
+    if (status === "authenticated" || status === "unauthenticated") {
+      if (initialState) {
+        initialState = false;
+        return;
+      }
+      updateItemsInCartHandler();
+    }
+  }, [cart, status]);
 
   return (
     <Container width="100%" flex="column" height="100%">
@@ -35,21 +124,22 @@ export default function Header(props) {
           {/* <Image src={Logo} alt="logo-cross" width={35} height={35} /> */}
         </Container>
         <Container align="center">
-          <Container>
+          <button onClick={toggleCartHandler} className={classes["cart-btn"]}>
             <Image
               src={Bag}
               alt="logo-cross"
               width={25}
               height={25}
               className={classes.cart}
-              onClick={showCartHandler}
             />
-            <PTags fontSize="15px" margin="0 0 0 0.25rem">
-              {calculateCartItem()}
-            </PTags>
-          </Container>
 
-          <button className={classes["hamburger"]} onClick={showSidebarHandler}>
+            <span className={classes["cart-span"]}>{calculateCartItem()}</span>
+          </button>
+
+          <button
+            className={classes["hamburger"]}
+            onClick={toggleSidebarHandler}
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -61,13 +151,17 @@ export default function Header(props) {
       <Footer />
 
       {/* OVERLAYS */}
-      {sidebar && <Sidebar onHide={hideSidebarHandler} />}
+      {showSidebar && <Sidebar onHide={toggleSidebarHandler} />}
 
-      {cart && (
-        <Modal click={hideCartHandler}>
-          <Cart onHide={hideCartHandler} />
+      {showCart && (
+        <Modal click={toggleCartHandler}>
+          <Cart />
         </Modal>
       )}
+
+      {error && <Alert message={error} status={"error"} />}
+      {successMessage && <Alert message={successMessage} status={"success"} />}
+      {loading && <Loader message={"Updating Cart"} />}
     </Container>
   );
 }

@@ -1,11 +1,9 @@
-import { signOut } from "next-auth/react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Container from "../Containers/container";
 import axios from "axios";
 import classes from "./index.module.css";
 import { PTags } from "../Text";
-import { CartContext } from "../Context/cart";
 import Modal from "../Modal";
 import ChangePasswordForm from "./changePassword";
 import Button from "../Button";
@@ -16,7 +14,6 @@ import UserOrders from "./userOrder";
 const perPage = 5;
 
 export default function UserProfile(props) {
-  const cartCtx = useContext(CartContext);
   const router = useRouter();
   const [user, setUser] = useState("");
   const [passwordForm, showPasswordForm] = useState(false);
@@ -62,11 +59,6 @@ export default function UserProfile(props) {
   const showPasswordFormHandler = () => showPasswordForm(true);
   const hidePasswordFormHandler = () => showPasswordForm(false);
 
-  const logoutHandler = () => {
-    cartCtx.emptyCart();
-    signOut();
-  };
-
   useEffect(() => {
     fetchUserHandler();
   }, []);
@@ -86,10 +78,6 @@ export default function UserProfile(props) {
   return (
     <Container margin="5rem 0 0 0" width="100%" flex="column" minHeight="60vh">
       <Container width="100%" justify="flex-end" padding="1rem">
-        <button className="button" onClick={logoutHandler}>
-          Logout
-        </button>
-
         <button className="button" onClick={showPasswordFormHandler}>
           Change Password
         </button>

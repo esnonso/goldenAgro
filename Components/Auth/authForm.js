@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
+
+import { cartActions } from "../Redux/cart-slice";
 import Container from "../Containers/container";
 import { PTags } from "../Text/index";
 import classes from "./index.module.css";
@@ -10,6 +13,8 @@ import Link from "next/link";
 
 const AuthForm = (props) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.items);
   const { status } = useSession();
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -74,14 +79,29 @@ const AuthForm = (props) => {
           setErr("Fill all inputs");
           return;
         }
-
         //SIGNIN
         const res = await signIn("credentials", {
           email,
           password,
           redirect: false,
         });
+
         if (res.error) throw new Error(res.error);
+        else {
+          const foundCart = await axios.post(
+            "/api/updateCartLogin",
+            { cart: cart },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log(foundCart.data.cart);
+          dispatch(cartActions.replaceCart(foundCart.data.cart));
+          localStorage.removeItem("cart");
+        }
+
         router.replace("/");
       }
     } catch (err) {

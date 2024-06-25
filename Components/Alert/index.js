@@ -10,7 +10,9 @@ export default function Alert(props) {
         className={
           props.status === "error"
             ? classes["error-alert"]
-            : classes["success-alert"]
+            : props.status === "success"
+            ? classes["success-alert"]
+            : classes["pending-alert"]
         }
       >
         <div className={classes["text-container"]}>

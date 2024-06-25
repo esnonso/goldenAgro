@@ -3,7 +3,7 @@ import classes from "./index.module.css";
 
 export default function DiagonalLines() {
   return (
-    <Container width="100" flex="column" margin="4rem 0 0 0">
+    <Container width="100" flex="column" margin="5rem 0 0 0">
       <div
         className={`${classes["diagonal-lines"]} ${classes["diagonal-one"]}`}
       ></div>

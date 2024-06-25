@@ -1,19 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { CartContext } from "../Context/cart";
+
+import { cartActions } from "../Redux/cart-slice";
+import { uiActions } from "../Redux/ui-slice";
 import Container from "../Containers/container";
 import CloseBtn from "../../Images/close-btn.png";
 import Plus from "../../Images/plus.png";
 import Minus from "../../Images/minus.png";
-import { H1Tags, PTags } from "../Text";
+import { PTags } from "../Text";
 import classes from "./index.module.css";
 import Image from "next/image";
 
 export default function Cart(props) {
-  const cartCtx = useContext(CartContext);
+  const cart = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const showCart = useSelector((state) => state.ui.cartIsVisible);
 
-  const totalPrice = cartCtx.cart.reduce(
+  const totalPrice = cart.reduce(
     (acc, item) => acc + +item.quantity * +item.price,
     0
   );
@@ -22,37 +27,52 @@ export default function Cart(props) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  const increaseCartItemHandler = (id) => {
+    dispatch(cartActions.increaseCartItem(id));
+  };
+
+  const decreaseCartItemHandler = (id) => {
+    dispatch(cartActions.decreaseCartItem(id));
+  };
+
+  const removeCartItemHandler = (id) => {
+    dispatch(cartActions.removeFromCart(id));
+  };
+
+  const toggleCartHandler = () => {
+    dispatch(uiActions.toggleCart());
+  };
+
   return (
     <Container width="100%" flex="column">
-      {router.pathname !== "/checkout" && cartCtx.cart.length !== 0 && (
+      {router.pathname !== "/checkout" && cart.length !== 0 && (
         <PTags margin="1rem 0 1rem 0" fontSize="20px">
           Cart
         </PTags>
       )}
 
-      {cartCtx.cart.length === 0 && (
+      {cart.length === 0 && (
         <PTags fontSize="17px">Oops No item in cart!</PTags>
       )}
-      {cartCtx.cart.length > 0 && (
+      {cart.length > 0 && (
         <>
-          {" "}
           <Container
             width="100%"
             justify="space-between"
             borderBottom="1px #0B1847 solid"
           >
-            <PTags width="40%">
+            <PTags width="35%">
               <b>Item</b>
             </PTags>
             <PTags width="25%">
               <b>Price</b>
             </PTags>
-            <PTags width="25%">
+            <PTags width="30%">
               <b>Quantity</b>
             </PTags>
             <PTags width="10%"></PTags>
           </Container>
-          {cartCtx.cart.map((item) => (
+          {cart.map((item) => (
             <Container
               key={item.id}
               width="100%"
@@ -63,41 +83,54 @@ export default function Cart(props) {
               align="center"
               padding="0.5rem 0"
             >
-              <PTags width="40%">{item.size} Bag</PTags>
+              <PTags width="35%">{item.size} Bag</PTags>
               <PTags width="25%">₦{numberWithCommas(item.price)}</PTags>
               <Container
-                width="25%"
+                width="30%"
                 height="fit-content"
                 align="center"
                 padding="0 0.1rem"
               >
-                <PTags width="8%">{item.quantity}</PTags>
+                <PTags width="5%">{item.quantity}</PTags>
                 <Container margin="0 1rem">
-                  <Image
-                    src={Plus}
-                    alt="home icon by icons 8"
-                    width={20}
-                    height={20}
-                    className={classes.plus}
-                    onClick={() => cartCtx.increaseCartItem(item.id)}
-                  />
-                  <Image
-                    src={Minus}
-                    alt="home icon by icons 8"
-                    width={20}
-                    height={20}
-                    onClick={() => cartCtx.decreaseCartItem(item.id)}
-                  />
+                  <button
+                    onClick={() => increaseCartItemHandler(item.id)}
+                    className={classes["action-btns"]}
+                  >
+                    <Image
+                      src={Plus}
+                      alt="home icon by icons 8"
+                      width={20}
+                      height={20}
+                      className={classes.plus}
+                    />
+                  </button>
+
+                  <button
+                    onClick={() => decreaseCartItemHandler(item.id)}
+                    className={classes["action-btns"]}
+                  >
+                    <Image
+                      src={Minus}
+                      alt="home icon by icons 8"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
                 </Container>
               </Container>
               <Container width="10%" justify="center">
-                <Image
-                  src={CloseBtn}
-                  alt="close-icon"
-                  width={20}
-                  height={20}
-                  onClick={() => cartCtx.removeFromCart(item.id)}
-                />
+                <button
+                  onClick={() => removeCartItemHandler(item.id)}
+                  className={classes["close-btn"]}
+                >
+                  <Image
+                    src={CloseBtn}
+                    alt="close-icon"
+                    width={20}
+                    height={20}
+                  />
+                </button>
               </Container>
             </Container>
           ))}
@@ -109,7 +142,7 @@ export default function Cart(props) {
               <button
                 className="button"
                 onClick={() => {
-                  props.onHide();
+                  toggleCartHandler();
                   router.push("/checkout");
                 }}
               >

@@ -21,3 +21,20 @@ body{
   background-color: gray;
   color:black;
 }
+
+.email-error{
+  width:95%;
+  background-color: #F8D7DA;
+  color: #721C24;
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 10px;   
+  height: fit-content;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width:900px) {
+  .email-error{
+    width: 50%;
+  }
+}

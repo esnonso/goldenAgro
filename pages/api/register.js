@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       status: "User",
     }).save();
 
-    const link = `${process.env.URL}/verify=${user.email}code=${user.confirmationCode}`;
+    const link = `${process.env.URL}/email/verify=${user.email}code=${user.confirmationCode}`;
 
     const msg = {
       to: user.email,
@@ -35,9 +35,8 @@ export default async function handler(req, res) {
       dynamicTemplateData: { name: user.name, link: link },
     };
 
-    await sgMail.send(msg);
-
-    return res.status(200).json("Success! Check you email for confirmation");
+    res.status(200).json("Success! Check you email for confirmation");
+    return sgMail.send(msg);
   } catch (error) {
     if (error.status) {
       res.status(error.status).json(error.message);

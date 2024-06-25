@@ -1,19 +1,17 @@
 import { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { cartActions } from "../Redux/cart-slice";
 import classes from "./index.module.css";
 import Container from "../Containers/container";
 import { PTags } from "../Text";
 import Button from "../Button";
-import { CartContext } from "../Context/cart";
 import { products } from "../Products";
 
 const AddForm = (props) => {
-  const cartCtx = useContext(CartContext);
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState("");
-  const [size, setSize] = useState("");
-
-  useEffect(() => {
-    if (props.size) setSize(props.size);
-  }, []);
+  const [size, setSize] = useState(props.size ? props.size : "");
 
   const inputChangeHandler = (setState) => (e) => {
     setState(e.target.value);
@@ -34,12 +32,14 @@ const AddForm = (props) => {
     if (size === "") return;
     for (let item of products) {
       if (item.size === size) {
-        cartCtx.addToCart({
-          id: item.id,
-          size: item.size,
-          quantity: +quantity || 1,
-          price: item.price,
-        });
+        dispatch(
+          cartActions.addTocart({
+            id: item.id,
+            size: item.size,
+            quantity: +quantity || 1,
+            price: item.price,
+          })
+        );
       }
     }
     props.onHide();
@@ -48,7 +48,7 @@ const AddForm = (props) => {
   return (
     <form width="100%" onSubmit={submitHandler}>
       <PTags fontSize="20px" width="100%" textAlign="center">
-        Add to Cart
+        Select Size to Add to Your Cart
       </PTags>
       {!props.size && (
         <Container width="100%" margin="2rem 0">

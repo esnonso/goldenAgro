@@ -110,7 +110,7 @@ const Reviews = () => {
         <Container alignItems="center" width="90%" margin="0 auto 0 auto">
           {chunkedreviews.length > 0 &&
             chunkedreviews[count].map((item) => (
-              <Cards key={item._id} height="20rem">
+              <Cards key={item._id} height="fit-content">
                 <Image
                   src={UserIcon}
                   alt="user-icon"
@@ -138,12 +138,7 @@ const Reviews = () => {
                 >
                   <b>{item.user.name}</b>
                 </PTags>
-                <PTags
-                  fontSize="18px"
-                  width="100%"
-                  padding="0.4rem 0 0 0"
-                  textAlign="center"
-                >
+                <PTags width="100%" padding="0.4rem 0 0 0" textAlign="justify">
                   "{item.comment}"
                 </PTags>
               </Cards>
@@ -168,56 +163,65 @@ export default Reviews;
 const dummyReviews = [
   {
     _id: 1,
-    user: { id: 2, name: "John Doe" },
+    user: { id: 2, name: "Uchenna Otuonye" },
     rating: 5,
-    comment: "Golden agro rice is the best for all",
+    comment:
+      "This is a great quality rice & perfect for my daily use. The grains boil to a firm consistency that go well with any gravy. The aroma is great.",
   },
   {
     _id: 2,
-    user: { id: 1, name: "Nonso Nelly" },
-    rating: 4,
-    comment: "Perfect rice for all",
+    user: { id: 1, name: "Utoh Raphael Chijioke" },
+    rating: 5,
+    comment:
+      "Golden Agro Industries Ltd is the most reliable rice producer in Nigeria! The grains are finest, sweeter and nourishing. I guarantee their product for best price, quality and quantity...",
   },
   {
     _id: 3,
-    user: { id: 2, name: "Big Fish" },
+    user: { id: 25, name: "Geraldine Barde" },
     rating: 4.5,
-    comment: "Recommended rice for all",
+    comment:
+      "Excellent rice quality; no stone, no stain, super clean and the very best in the market. Different package of rice available to suit the number of families for a given time. Thank you Golden Agro for standing out 👍 👍 👍",
   },
   {
     _id: 4,
-    user: { id: 3, name: "Ben Carson" },
+    user: { id: 35, name: "CHUKWUEBUKA IJEOMA" },
     rating: 5,
-    comment: "Ethical rice service for all",
+    comment:
+      "Golden Agro Industries Limited.. is trademark of excellence.. Their products are unique and exceptional..  They have a solid business and investment plan which enables them meet up with all customer demands and expectations.. Highly Remarkable.",
   },
   {
     _id: 5,
-    user: { id: 5, name: "Nonny Sharman" },
+    user: { id: 51, name: "Okonkwo Joseph" },
     rating: 5,
-    comment: "I love golden agro rice",
+    comment:
+      "He is very honest and delivers promptly. The last order I got from him to my customers made them longing for more. Please keep up the good work.",
   },
   {
     _id: 6,
-    user: { id: 6, name: "Ben Bonus" },
-    rating: 3,
-    comment: "Took time to deliver my product",
+    user: { id: 63, name: "IBEH CHIDERA BOB" },
+    rating: 5,
+    comment:
+      "The best rice you can ever think of buying. Thank me later. Kudos Golden Agro 👍",
   },
   {
     _id: 7,
-    user: { id: 7, name: "Roncho R" },
-    rating: 1,
-    comment: "Poor customer service",
+    user: { id: 7, name: "Henry Ehikioya" },
+    rating: 5,
+    comment:
+      "I love the rice because it's long grains and very neat. Besides that, it cooks fast.",
   },
   {
     _id: 8,
-    user: { id: 8, name: "Ricky Mort" },
+    user: { id: 8, name: "augustine pablo ajuzie" },
     rating: 5,
-    comment: "I love these guys",
+    comment:
+      "Golden agro is a tested and trusted company. 3years and still enjoying there services. There rice is superb.👍",
   },
   {
     _id: 9,
-    user: { id: 9, name: "Rebing John" },
+    user: { id: 9, name: "Eleje Ephraim" },
     rating: 5,
-    comment: "Golden agro is the best for all and recommended for all",
+    comment:
+      "na this rice we use for our grandfather celebration of life. The rice go well scatter.",
   },
 ];

@@ -26,7 +26,7 @@ export default function AboutPage(props) {
       alert("Email verification succesful");
       router.replace("/login");
     } catch (error) {
-      setFailure(error.response.data);
+      setFailure(error.response ? error.response.data : "An Error occured");
       verificationDone(false);
     }
   };
@@ -35,15 +35,6 @@ export default function AboutPage(props) {
     verifyEmailHandler();
     console.log("n");
   }, []);
-  const errorAlert = {
-    backgroundColor: "#F8D7DA",
-    color: "#721C24",
-    margin: "0 auto",
-    padding: "0.5rem",
-    textAlign: "center",
-    borderRadius: "20px",
-    width: "100%",
-  };
 
   return (
     <Fragment>
@@ -58,10 +49,8 @@ export default function AboutPage(props) {
       <Container margin="5rem 0 0 0" height="40vh" padding="2rem 1rem">
         {veryfying && <Loader message={"Veryfying Email"} />}
         {failure && (
-          <div style={errorAlert}>
-            <PTags fontSize="20px" textAlign="center">
-              An error occured!
-            </PTags>
+          <div className="email-error">
+            <PTags fontSize="20px">Error!</PTags>
             <p>{failure}</p>
           </div>
         )}
