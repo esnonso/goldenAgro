@@ -74,11 +74,7 @@ export default function DashboardOrders() {
         <div className={classes.container}>
           <ContainerFlexColumn width="100%" justify="space-between">
             <h1>All Orders</h1>
-            {orders.length < 1 && (
-              <PTags fontSize="20px">
-                You don not have orders from clients
-              </PTags>
-            )}
+
             <Container align="center" padding="0.5rem">
               <PTags margin="0 1rem 0 0">Filter</PTags>
               <select
@@ -100,6 +96,10 @@ export default function DashboardOrders() {
               </button>
             </Container>
           </ContainerFlexColumn>
+
+          {orders.length < 1 && (
+            <PTags fontSize="20px">You don not have orders from clients</PTags>
+          )}
 
           {orders.map((order) => {
             return (

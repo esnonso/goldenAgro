@@ -40,7 +40,6 @@ export default async function handler(req, res) {
     if (error.status) {
       res.status(error.status).json(error.message);
     } else {
-      console.log(error);
       res.status(500).json("An error occured");
     }
   }
