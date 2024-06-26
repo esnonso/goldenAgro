@@ -35,8 +35,7 @@ export default async function handler(req, res) {
       dynamicTemplateData: { name: user.name, link: link },
     };
     res.status(200).json("Success! Check you email for confirmation");
-
-    return await sgMail.send(msg);
+    return sgMail.send(msg);
   } catch (error) {
     if (error.status) {
       res.status(error.status).json(error.message);
