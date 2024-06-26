@@ -8,15 +8,26 @@
     width:100%
 }
 
-.hr{
-    height: 1;
-    background-color: #ccc;
-    width: 100%;
-}
-
 .btn {
-    background-color: white;
-    border:1px #0b6623 solid;
+    background-color: #ccc;
+    border:none;
     padding:0.2rem 0.5rem;
     border-radius: 5px;
+    font:inherit;
+}
+
+.verified-span{
+    padding: 0.5rem;
+    background-color: #c9eed3;
+    border-radius: 10px;
+    color: #0B6623;
+    box-sizing: border-box;
+}
+
+.unverified-span{
+    padding: 0.5rem;
+    background-color: #F8D7DA;
+    color: #721C24;
+    border-radius: 10px;
+    box-sizing: border-box;
 }

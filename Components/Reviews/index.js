@@ -29,6 +29,7 @@ export default function ReviewForm(props) {
   const [rating, setRating] = useState(null);
   const [alert, showAlert] = useState(false);
   const [comment, setComment] = useState("");
+  const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
   function printStarsHandler() {
@@ -57,6 +58,7 @@ export default function ReviewForm(props) {
   const submitHandler = async (e) => {
     try {
       e.preventDefault();
+      setIsLoading(true);
       if (status === "unauthenticated")
         throw new Error("You need to login to continue");
       const response = await axios.post(
@@ -103,7 +105,7 @@ export default function ReviewForm(props) {
       </Container>
       <Container width="100%" justify="flex-end">
         <Button
-          text="Sumbit"
+          text={loading ? "Submitting" : "Submit"}
           back={"#0b6223"}
           height={"3rem"}
           width="30%"

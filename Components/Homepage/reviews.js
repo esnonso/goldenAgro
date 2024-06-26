@@ -107,7 +107,7 @@ const Reviews = () => {
             click={decreaseCountHandler}
           />
         </Container>
-        <Container alignItems="center" width="90%" margin="0 auto 0 auto">
+        <Container alignItems="center" width="95%" margin="0 auto 0 auto">
           {chunkedreviews.length > 0 &&
             chunkedreviews[count].map((item) => (
               <Cards key={item._id} height="fit-content">

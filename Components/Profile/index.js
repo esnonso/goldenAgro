@@ -10,8 +10,10 @@ import Button from "../Button";
 import Loader from "../Loaders/loader";
 import Alert from "../Alert";
 import UserOrders from "./userOrder";
+import DiagonalLines from "../Lines";
 
 const perPage = 5;
+let count = 0;
 
 export default function UserProfile(props) {
   const router = useRouter();
@@ -33,7 +35,6 @@ export default function UserProfile(props) {
       setOrders(res.data.orders);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setError("An error occured getting orders, try again");
       fetchUserHandler();
     }
@@ -64,6 +65,10 @@ export default function UserProfile(props) {
   }, []);
 
   useEffect(() => {
+    if (count < 2) {
+      count++;
+      return;
+    }
     fetchOrdersHandler();
   }, [page]);
 
@@ -81,6 +86,15 @@ export default function UserProfile(props) {
         <button className="button" onClick={showPasswordFormHandler}>
           Change Password
         </button>
+
+        {user.role === "Administrator" && (
+          <button
+            className="button"
+            onClick={() => router.push("/golden-admin")}
+          >
+            Dashboard
+          </button>
+        )}
       </Container>
 
       <Container width="100%" padding="0 1rem">
@@ -93,19 +107,30 @@ export default function UserProfile(props) {
         </PTags>
         <Container flex="column">
           <PTags>Name: {user.name}</PTags>
-          <PTags>Email: {user.email}</PTags>
+          <PTags margin="0.5rem 0">
+            Email: {user.email}{" "}
+            <span
+              className={
+                classes[
+                  `${user.confirmed ? "verified-span" : "unverified-span"}`
+                ]
+              }
+            >
+              {user.confirmed ? "Verified" : "Unverified"}
+            </span>
+          </PTags>
           <PTags>Registered: {new Date(user.createdAt).toUTCString()}</PTags>
         </Container>
       </Container>
 
-      <Container width="100%" padding="0 1rem">
-        <hr className={classes.hr} />
-      </Container>
+      <DiagonalLines />
 
       <Container margin="0.5rem 0 0 0" flex="column" padding="0 1rem">
         <PTags fontSize="20px" margin="1rem 0">
           Orders
         </PTags>
+
+        {orders.length < 1 && <PTags margin="1rem 0">No orders</PTags>}
 
         <Container width="100%" flex="column">
           {orders.map((order) => {
@@ -116,6 +141,8 @@ export default function UserProfile(props) {
                 justify="space-between"
                 margin="0.5rem 0"
                 align="center"
+                color="#FAFAFA"
+                padding="0.7rem"
               >
                 <Container width="60%" flex="column">
                   <PTags>{order.transaction}</PTags>
@@ -123,12 +150,27 @@ export default function UserProfile(props) {
                     Created: {new Date(order.createdAt).toUTCString()}
                   </small>
                 </Container>
-                <PTags>{order.delivered}</PTags>
+                <PTags>
+                  <span
+                    className={`${
+                      order.delivered === "Pending"
+                        ? "pending"
+                        : order.delivered === "Processing"
+                        ? "processing"
+                        : order.delivered === "In Transit"
+                        ? "in-transit"
+                        : "delivered"
+                    }`}
+                    style={{ padding: "0.5rem", borderRadius: "10px" }}
+                  >
+                    {order.delivered}
+                  </span>
+                </PTags>
                 <button
                   className={classes.btn}
                   onClick={() => setSelectedOrder(order)}
                 >
-                  View
+                  view
                 </button>
               </Container>
             );
@@ -167,10 +209,6 @@ export default function UserProfile(props) {
             </Container>
           )}
         </Container>
-      </Container>
-
-      <Container width="100%" padding="0 1rem">
-        <hr className={classes.hr} />
       </Container>
 
       {/* OVERLAYS */}

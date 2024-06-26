@@ -19,7 +19,7 @@
     box-sizing: border-box;
     border: 1px #cfcacc solid;
     border-radius: 5px;
-    font-family: inherit;
+    font: inherit;
 }
 
 .long{
@@ -28,7 +28,7 @@
     box-sizing: border-box;
     border: 1px #cfcacc solid;
     border-radius: 5px;
-    font-family: inherit;
+    font: inherit;
 }
 
 .button{

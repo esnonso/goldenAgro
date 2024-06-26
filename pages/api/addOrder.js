@@ -32,8 +32,11 @@ export default async function handler(req, res) {
       address,
     }).save();
 
+    const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const nextTwoweeks = new Date(Date.now() + 12096e5);
+
     const msg = {
-      to: email,
+      to: [email, "admin@goldenagro.ng"],
       from: {
         name: process.env.MAIL_NAME,
         email: process.env.MAIL_ADDRESS,
@@ -47,9 +50,9 @@ export default async function handler(req, res) {
         date: new Date(),
         total: `₦ ${numberWithCommas(total)}`,
         shipdate:
-          new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) +
-          " to " +
-          new Date(Date.now() + 12096e5),
+          new Date(nextWeek).toUTCString() +
+          " To " +
+          new Date(nextTwoweeks).toUTCString(),
       },
     };
     res.status(200).json("Your order has been received");

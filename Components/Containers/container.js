@@ -18,6 +18,7 @@ const Container = (props) => {
     zIndex: props.zindex,
     opacity: props.opacity,
     borderRadius: props.radius,
+    flexWrap: props.wrap,
   };
 
   return (
